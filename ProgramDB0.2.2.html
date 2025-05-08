@@ -1,0 +1,512 @@
+--- START OF FILE code (46).html ---
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zen ERD - Standalone (v0.2.2)</title> <!-- Versión con Configuración centralizada -->
+    <style>
+        /* --- CSS Global Styles and Variables --- */
+         :root {
+             /* Base & Layout */
+             --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+             --border-radius: 0.375rem; /* 6px / 16px */
+             --border-radius-small: 0.25rem; /* 4px / 16px */
+             --transition-speed: 0.2s;
+             --transition-speed-fast: 0.1s;
+             --base-font-size: 16px; /* Base font size for rem calculations */
+
+             /* Light Theme Colors */
+             --bg-light: #f8f9fa; --canvas-bg-light: #ffffff; --text-light: #212529; --text-muted-light: #6c757d; --border-light: #dee2e6; --toolbar-bg-light: rgba(255, 255, 255, 0.9); --toolbar-shadow-light: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.08); --button-bg-light: #f1f3f5; --button-hover-bg-light: #e9ecef; --button-text-light: #343a40; --menu-bg-light: #ffffff; --menu-shadow-light: 0 0.3125rem 0.9375rem rgba(0, 0, 0, 0.1); --menu-item-hover-light: #f1f3f5; --info-text-light: #495057; --select-color-light: #0d6efd; --select-glow-light: rgba(13, 110, 253, 0.3); --danger-color-light: #dc3545; --connect-target-color-light: #198754; --connect-target-glow-light: rgba(25, 135, 84, 0.4); --connector-hover-light: rgba(13, 110, 253, 0.15); --connecting-line-light: #0d6efd; --modal-overlay-light: rgba(0, 0, 0, 0.3); --modal-bg-light: #ffffff; --connection-point-bg-light: #0d6efd; --connection-point-border-light: #ffffff; --grid-color-light: #e9ecef;
+             /* Dark Theme Colors */
+             --bg-dark: #212529; --canvas-bg-dark: #2b3035; --text-dark: #e9ecef; --text-muted-dark: #adb5bd; --border-dark: #495057; --toolbar-bg-dark: rgba(33, 37, 41, 0.9); --toolbar-shadow-dark: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.3); --button-bg-dark: #495057; --button-hover-bg-dark: #6c757d; --button-text-dark: #e9ecef; --menu-bg-dark: #343a40; --menu-shadow-dark: 0 0.3125rem 1.125rem rgba(0, 0, 0, 0.5); --menu-item-hover-dark: #495057; --info-text-dark: #adb5bd; --select-color-dark: #6ea8fe; --select-glow-dark: rgba(110, 168, 254, 0.3); --danger-color-dark: #f17c85; --connect-target-color-dark: #48c084; --connect-target-glow-dark: rgba(72, 192, 132, 0.4); --connector-hover-dark: rgba(110, 168, 254, 0.15); --connecting-line-dark: #6ea8fe; --modal-overlay-dark: rgba(0, 0, 0, 0.5); --modal-bg-dark: #343a40; --connection-point-bg-dark: #6ea8fe; --connection-point-border-dark: #dee2e6; --grid-color-dark: #495057;
+             /* Diagram Element Colors (Defaults) */
+             --entity-fill: #ffffff; --entity-stroke: #333333; --attribute-fill: #ffffff; --attribute-stroke: #333333; --attribute-pk-fill: #333333; --attribute-ak-fill1: #333333; --attribute-ak-fill2: #ffffff; --relation-fill: #ffffff; --relation-stroke: #333333; --line-color: #555555; --text-element-color: #000000; --cardinality-color: #444444; --relation-name-color: #000000;
+        }
+        html {
+            font-size: var(--base-font-size); /* Base font size for rem units */
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: var(--font-main); height: 100vh; overflow: hidden; background-color: var(--bg-color); color: var(--text-color); transition: background-color var(--transition-speed), color var(--transition-speed); line-height: 1.5; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+        body.light-mode { /* Light Theme Variables Mapping */ --bg-color: var(--bg-light); --canvas-bg: var(--canvas-bg-light); --text-color: var(--text-light); --text-muted-color: var(--text-muted-light); --border-color: var(--border-light); --toolbar-bg: var(--toolbar-bg-light); --toolbar-shadow: var(--toolbar-shadow-light); --button-bg: var(--button-bg-light); --button-hover-bg: var(--button-hover-bg-light); --button-text: var(--button-text-light); --menu-bg: var(--menu-bg-light); --menu-shadow: var(--menu-shadow-light); --menu-item-hover: var(--menu-item-hover-light); --info-text: var(--info-text-light); --select-color: var(--select-color-light); --select-glow: var(--select-glow-light); --danger-color: var(--danger-color-light); --connect-target-color: var(--connect-target-color-light); --connect-target-glow: var(--connect-target-glow-light); --connector-hover: var(--connector-hover-light); --connecting-line: var(--connecting-line-light); --modal-overlay: var(--modal-overlay-light); --modal-bg: var(--modal-bg-light); --connection-point-bg: var(--connection-point-bg-light); --connection-point-border: var(--connection-point-border-light); --grid-color: var(--grid-color-light); --entity-fill: #ffffff; --entity-stroke: #adb5bd; --attribute-fill: #ffffff; --attribute-stroke: #adb5bd; --attribute-pk-fill: #343a40; --attribute-ak-fill1: #343a40; --attribute-ak-fill2: #ffffff; --relation-fill: #ffffff; --relation-stroke: #adb5bd; --line-color: #6c757d; --text-element-color: #212529; --cardinality-color: #495057; --relation-name-color: #212529; }
+        body.dark-mode { /* Dark Theme Variables Mapping */ --bg-color: var(--bg-dark); --canvas-bg: var(--canvas-bg-dark); --text-color: var(--text-dark); --text-muted-color: var(--text-muted-dark); --border-color: var(--border-dark); --toolbar-bg: var(--toolbar-bg-dark); --toolbar-shadow: var(--toolbar-shadow-dark); --button-bg: var(--button-bg-dark); --button-hover-bg: var(--button-hover-bg-dark); --button-text: var(--button-text-dark); --menu-bg: var(--menu-bg-dark); --menu-shadow: var(--menu-shadow-dark); --menu-item-hover: var(--menu-item-hover-dark); --info-text: var(--info-text-dark); --select-color: var(--select-color-dark); --select-glow: var(--select-glow-dark); --danger-color: var(--danger-color-dark); --connect-target-color: var(--connect-target-color-dark); --connect-target-glow: var(--connect-target-glow-dark); --connector-hover: var(--connector-hover-dark); --connecting-line: var(--connecting-line-dark); --modal-overlay: var(--modal-overlay-dark); --modal-bg: var(--modal-bg-dark); --connection-point-bg: var(--connection-point-bg-dark); --connection-point-border: var(--connection-point-border-dark); --grid-color: var(--grid-color-dark); --entity-fill: #495057; --entity-stroke: #adb5bd; --attribute-fill: #495057; --attribute-stroke: #adb5bd; --attribute-pk-fill: #dee2e6; --attribute-ak-fill1: #dee2e6; --attribute-ak-fill2: #495057; --relation-fill: #495057; --relation-stroke: #adb5bd; --line-color: #adb5bd; --text-element-color: #f8f9fa; --cardinality-color: #ced4da; --relation-name-color: #f8f9fa; }
+        #canvasContainer { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--bg-color); } canvas { display: block; background-color: var(--canvas-bg); transition: background-color var(--transition-speed); width: 100%; height: 100%; image-rendering: pixelated; image-rendering: crisp-edges; cursor: default; }
+        #toolbar { position: fixed; background-color: var(--toolbar-bg); backdrop-filter: blur(8px); padding: 0.4rem 0.6rem; display: flex; align-items: center; box-shadow: var(--toolbar-shadow); border: 1px solid var(--border-color); border-radius: var(--border-radius); transition: transform 0.3s ease-out, top 0.3s ease-out, left 0.3s ease-out, bottom 0.3s ease-out, right 0.3s ease-out, background-color var(--transition-speed), border-color var(--transition-speed), box-shadow var(--transition-speed); z-index: 100; gap: 0.3rem; width: auto; max-width: calc(100% - 1.25rem); } #toolbar .button-group { display: flex; align-items: center; gap: 0.25rem; } #toolbar button { background-color: transparent; border: 1px solid transparent; color: var(--button-text); padding: 0.3rem 0.5rem; cursor: pointer; font-size: 1rem; border-radius: var(--border-radius-small); transition: background-color var(--transition-speed-fast), border-color var(--transition-speed-fast), color var(--transition-speed-fast); line-height: 1; display: inline-flex; align-items: center; justify-content: center; min-width: 2rem; min-height: 2rem; } #toolbar button:hover:not(:disabled) { background-color: var(--button-hover-bg); border-color: var(--border-color); } #toolbar button:active:not(:disabled) { transform: translateY(1px); } #toolbar button:disabled { opacity: 0.4; cursor: default; background-color: transparent !important; border-color: transparent !important; color: var(--text-muted-color); transform: none; } #toolbar button.active-toggle { background-color: var(--select-color-light); color: white; border-color: var(--select-color-light); } body.dark-mode #toolbar button.active-toggle { background-color: var(--select-color-dark); color: var(--bg-dark); border-color: var(--select-color-dark); } #toolbar .separator { width: 1px; height: 1.5rem; background-color: var(--border-color); margin: 0 0.5rem; } #toolbar #selectedInfoToolbar { font-size: 0.8rem; color: var(--info-text); flex-grow: 1; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin: 0 1rem; padding: 0.25rem 0.5rem; background-color: var(--button-bg); border-radius: var(--border-radius-small); min-width: 9rem; } #addonElementCounterDisplay { font-size: 0.8rem; padding: 0.25rem 0.5rem; margin: 0 0.6rem 0 0.3rem; color: var(--info-text); background-color: var(--button-bg); border-radius: var(--border-radius-small);} #uiScaleDisplay { font-size: 0.8rem; color: var(--info-text); padding: 0.25rem 0.5rem; background-color: var(--button-bg); border-radius: var(--border-radius-small); margin: 0 0.2rem; min-width: 3.5rem; text-align: center; cursor: default; }
+        #toolbar.toolbar-pos-top { top: 0.625rem; left: 50%; transform: translateX(-50%) translateY(-150%); flex-direction: row; } #toolbar.toolbar-pos-top.visible { transform: translateX(-50%) translateY(0); }
+        #toolbar.toolbar-pos-bottom { bottom: 0.625rem; left: 50%; transform: translateX(-50%) translateY(150%); flex-direction: row; top: auto; } #toolbar.toolbar-pos-bottom.visible { transform: translateX(-50%) translateY(0); }
+        #toolbar.toolbar-pos-left { left: 0.625rem; top: 50%; transform: translateY(-50%) translateX(-150%); flex-direction: column; width: auto; max-width: none; max-height: calc(100% - 1.25rem); gap: 0.2rem; padding: 0.6rem 0.4rem; } #toolbar.toolbar-pos-left.visible { transform: translateY(-50%) translateX(0); } #toolbar.toolbar-pos-left .separator { width: 80%; height: 1px; margin: 0.5rem auto; }
+        #toolbar.toolbar-pos-right { right: 0.625rem; top: 50%; transform: translateY(-50%) translateX(150%); flex-direction: column; width: auto; max-width: none; max-height: calc(100% - 1.25rem); left: auto; gap: 0.2rem; padding: 0.6rem 0.4rem; } #toolbar.toolbar-pos-right.visible { transform: translateY(-50%) translateX(0); } #toolbar.toolbar-pos-right .separator { width: 80%; height: 1px; margin: 0.5rem auto; }
+        #contextMenu { position: fixed; background-color: var(--menu-bg); border: 1px solid var(--border-color); border-radius: var(--border-radius); box-shadow: var(--menu-shadow); padding: 0.4rem 0; z-index: 1000; min-width: 12rem; display: none; backdrop-filter: blur(5px); } #contextMenu ul { list-style: none; } #contextMenu li { padding: 0.6rem 1.2rem; cursor: pointer; font-size: 0.9rem; color: var(--text-color); white-space: nowrap; transition: background-color var(--transition-speed-fast); } #contextMenu li:hover { background-color: var(--menu-item-hover); } #contextMenu li.separator { height: 1px; background-color: var(--border-color); margin: 0.3rem 0; padding: 0; cursor: default; } #contextMenu li.danger { color: var(--danger-color); } #contextMenu li.danger:hover { background-color: rgba(220, 53, 69, 0.1); } #contextMenu li.disabled { color: var(--text-muted-color); cursor: default; background-color: transparent !important; opacity: 0.6; }
+        .connection-point { position: absolute; width: 0.75rem; height: 0.75rem; border: 2px solid var(--connection-point-border); border-radius: 50%; cursor: crosshair; z-index: 10; opacity: 0; transition: opacity var(--transition-speed-fast), transform var(--transition-speed-fast), box-shadow var(--transition-speed-fast); pointer-events: none; background-color: var(--connection-point-bg); box-shadow: 0 0 0.3rem rgba(0,0,0,0.2); } .connection-point.visible { opacity: 0.8; pointer-events: auto; } .connection-point:hover { opacity: 1; transform: scale(1.3); box-shadow: 0 0 0.5rem var(--select-glow); }
+        #helpModalOverlay, #addonManagerModalOverlay, #settingsModalOverlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--modal-overlay); backdrop-filter: blur(4px); z-index: 1500; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease-in-out; }
+        #helpModalOverlay.visible, #addonManagerModalOverlay.visible, #settingsModalOverlay.visible { display: flex; opacity: 1; }
+        #helpModalContent, #addonManagerModalContent, #settingsModalContent { background-color: var(--modal-bg); color: var(--text-color); padding: 1.8rem 2.5rem; border-radius: var(--border-radius); box-shadow: var(--menu-shadow); max-width: 40rem; width: 90%; max-height: 85vh; overflow-y: auto; position: relative; border: 1px solid var(--border-color); }
+        #helpModalContent h4, #addonManagerModalContent h4, #settingsModalContent h4 { margin-top: 0; margin-bottom: 1.2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.6rem; color: var(--select-color); font-weight: 500; }
+        #helpModalContent ul, #addonManagerModalContent ul { list-style: none; margin-bottom: 1.2rem; } #helpModalContent li { margin-bottom: 0.6rem; line-height: 1.6; } #helpModalContent kbd { background-color: var(--button-bg); border: 1px solid var(--border-color); padding: 0.2rem 0.4rem; border-radius: var(--border-radius-small); font-size: 0.8rem; margin: 0 0.25rem; box-shadow: 1px 1px 2px rgba(0,0,0,0.1); color: var(--info-text); font-family: monospace; }
+        #helpModalCloseBtn, #addonManagerCloseBtn, #settingsModalCloseBtn { position: absolute; top: 1rem; right: 1.2rem; background: none; border: none; font-size: 1.5rem; color: var(--text-muted-color); cursor: pointer; padding: 0; line-height: 1; transition: color var(--transition-speed-fast); }
+        #helpModalCloseBtn:hover, #addonManagerCloseBtn:hover, #settingsModalCloseBtn:hover { color: var(--danger-color); }
+        /* Addon Manager Specific */
+        #addonManagerModalContent li { border-bottom: 1px solid var(--border-color); padding: 1rem 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; } #addonManagerModalContent li:last-child { border-bottom: none; } #addonManagerModalContent .addon-info { flex-grow: 1; } #addonManagerModalContent .addon-name { font-weight: bold; display: block; margin-bottom: 0.2rem; } #addonManagerModalContent .addon-version { font-size: 0.75rem; color: var(--text-muted-color); margin-left: 0.3rem; } #addonManagerModalContent .addon-desc { font-size: 0.85rem; display: block; margin-top: 0.3rem; } #addonManagerModalContent .addon-controls { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; } #addonManagerModalContent .addon-enable-label { display: flex; align-items: center; cursor: pointer; font-size: 0.85rem; } #addonManagerModalContent .addon-enable-label input { margin-right: 0.5rem; transform: scale(1.1); } #addonManagerModalContent .reload-notice { font-size: 0.75rem; color: var(--danger-color); margin-top: 0.3rem; display: none; } #addonLoadSection { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid var(--border-color); text-align: center; } #addonLoadSection button { padding: 0.5rem 1rem; font-size: 0.85rem; }
+        /* Settings Modal Specific */
+        #settingsContainer { /* Placeholder for future settings sections */ }
+        #settingsContainer .setting-group { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
+        #settingsContainer .setting-group:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        #settingsContainer h5 { font-size: 1rem; color: var(--select-color); margin-bottom: 0.8rem; }
+        #settingsContainer label { display: block; margin-bottom: 0.5rem; font-size: 0.9rem; cursor: pointer; }
+        #settingsContainer input[type="number"], #settingsContainer input[type="text"] {
+            width: 100%; padding: 0.5rem; font-size: 0.9rem; border-radius: var(--border-radius-small);
+            border: 1px solid var(--border-color); background-color: var(--button-bg); color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+        #settingsContainer input[type="checkbox"] { margin-right: 0.5rem; transform: scale(1.1); vertical-align: middle; }
+        #settingsContainer .setting-group button.modal-access-button { /* Style for buttons opening other modals */
+            display: block; width: 100%; padding: 0.6rem 1rem; margin-bottom: 0.5rem; font-size: 0.9rem;
+            text-align: left; background-color: var(--button-bg); color: var(--button-text);
+            border: 1px solid var(--border-color); border-radius: var(--border-radius-small); cursor: pointer;
+            transition: background-color var(--transition-speed-fast);
+        }
+        #settingsContainer .setting-group button.modal-access-button:hover { background-color: var(--button-hover-bg); }
+    </style>
+</head>
+<body>
+    <!-- HTML Structure: Toolbar -->
+     <div id="toolbar" class="toolbar-pos-top"> <!-- Default position -->
+         <div class="button-group"> <!-- File Ops -->
+             <button id="saveBtn" title="Guardar a Archivo (.json)">💾</button>
+             <button id="loadBtn" title="Cargar desde Archivo (.json)">📂</button>
+             <button id="exportPngBtn" title="Exportar como Imagen (.png)">🖼️</button>
+             <button id="clearBtn" title="Limpiar Todo">🗑️</button>
+         </div>
+         <div class="separator"></div>
+         <div class="button-group"> <!-- History -->
+            <button id="undoBtn" title="Deshacer (Ctrl+Z)" disabled>↩️</button>
+            <button id="redoBtn" title="Rehacer (Ctrl+Y / Ctrl+Shift+Z)" disabled>↪️</button>
+         </div>
+         <div id="selectedInfoToolbar">Seleccionado: Ninguno</div>
+         <div class="separator"></div>
+         <!-- Addon Counter display element -->
+         <div id="addonElementCounterDisplay" title="Contador (Addon)">E: 0, R: 0</div>
+         <div class="button-group"> <!-- Grid -->
+            <button id="gridToggleBtn" title="Activar Ajuste a Cuadrícula">▦</button>
+         </div>
+          <div class="separator"></div>
+         <div class="button-group"> <!-- UI Scale Controls -->
+            <button id="uiScaleDownBtn" title="Reducir UI (-) minuscule">➖</button>
+            <span id="uiScaleDisplay" title="Escala actual de la UI">100%</span>
+            <button id="uiScaleUpBtn" title="Aumentar UI (+)">➕</button>
+         </div>
+         <div class="separator"></div>
+         <div class="button-group"> <!-- Toolbar Position -->
+             <button id="toolbarPosTopBtn" title="Barra Arriba" class="active-toggle">⬆️</button>
+             <button id="toolbarPosBottomBtn" title="Barra Abajo">⬇️</button>
+             <button id="toolbarPosLeftBtn" title="Barra Izquierda">⬅️</button>
+             <button id="toolbarPosRightBtn" title="Barra Derecha">➡️</button>
+         </div>
+         <div class="separator"></div>
+         <div class="button-group"> <!-- View Ops -->
+            <button id="zoomInBtn" title="Acercar (+)">➕</button>
+            <button id="zoomOutBtn" title="Alejar (-)">➖</button>
+            <button id="resetZoomPanBtn" title="Reset Vista (0)">️🎯</button>
+         </div>
+         <div class="separator"></div>
+          <div class="button-group"> <!-- Meta -->
+             <button id="settingsBtn" title="Configuración de Aplicación">🛠️</button>
+             <button id="themeToggleBtn" title="Cambiar Tema">🌓</button>
+          </div>
+     </div>
+
+     <!-- HTML Structure: Canvas & Context Menu -->
+     <div id="canvasContainer"> <canvas id="erdCanvas"></canvas> </div>
+     <div id="contextMenu"> <ul id="contextMenuItems"></ul> </div>
+     <input type="file" id="addonFileInput" accept=".js" style="display: none;">
+
+     <!-- HTML Structure: Help Modal -->
+     <div id="helpModalOverlay">
+        <div id="helpModalContent">
+            <button id="helpModalCloseBtn" title="Cerrar">×</button>
+            <h4>Ayuda de Controles - Zen ERD</h4>
+             <ul>
+                <li><strong>Crear Entidad:</strong> <kbd>Clic Derecho</kbd> en lienzo vacío → <i>"Add Entity Here"</i></li>
+                <li><strong>Crear Atributo (Entidad/Relación):</strong> <kbd>Clic Derecho</kbd> sobre dueño → <i>"Add Attr..."</i></li>
+                <li><strong>Crear Relación:</strong> <kbd>Arrastrar</kbd> 🔵 de Entidad 1 → Soltar sobre Entidad 2 🟢</li>
+                <li><strong>Seleccionar:</strong> <kbd>Clic Izquierdo</kbd></li>
+                <li><strong>Mover Entidad/Atributo:</strong> <kbd>Clic Izq</kbd> + <kbd>Arrastrar</kbd> (Entidad ajusta a cuadrícula si activa)</li>
+                <li><strong>Mover Lienzo (Pan):</strong> <kbd>Clic Izq</kbd> + <kbd>Arrastrar</kbd> fondo</li>
+                <li><strong>Zoom:</strong> <kbd>Rueda</kbd> / <kbd>➕</kbd> <kbd>➖</kbd> / <kbd>+</kbd> <kbd>-</kbd></li>
+                <li><strong>Editar:</strong> <kbd>Doble Clic</kbd> / <kbd>Clic Derecho</kbd> → <i>"Edit..."</i></li>
+                <li><strong>Redimensionar Entidad:</strong> <kbd>Clic Der</kbd> → <i>"Resize..."</i></li>
+                <li><strong>Redimensionar Rombo:</strong> <kbd>Clic Der</kbd> → <i>"Resize Diamond"</i> (Addon)</li>
+                <li><strong>Eliminar:</strong> <kbd>Seleccionar</kbd> + <kbd>Supr</kbd> / <kbd>Borrar</kbd> O <kbd>Clic Der</kbd> → <i>"Delete..."</i></li>
+                <li><strong>Mostrar/Ocultar Barra:</strong> Mover ratón cerca del borde</li>
+                <li><strong>Deshacer/Rehacer:</strong> <kbd>↩️</kbd> <kbd>↪️</kbd> / <kbd>Ctrl+Z</kbd> <kbd>Ctrl+Y</kbd></li>
+                <li><strong>Guardar/Cargar:</strong> <kbd>💾</kbd> <kbd>📂</kbd></li>
+                <li><strong>Exportar PNG:</strong> <kbd>🖼️</kbd></li>
+                <li><strong>Activar/Desactivar Cuadrícula:</strong> <kbd>▦</kbd></li>
+                <li><strong>Escalar UI:</strong> <kbd>➖</kbd> <kbd>➕</kbd> (junto al porcentaje)</li>
+                <li><strong>Posición Barra:</strong> <kbd>⬆️</kbd> <kbd>⬇️</kbd> <kbd>⬅️</kbd> <kbd>➡️</kbd></li>
+                <li><strong>Resetear Vista:</strong> <kbd>🎯</kbd> / <kbd>0</kbd></li>
+                <li><strong>Configuración App:</strong> <kbd>🛠️</kbd> (Acceso a Addons, Ayuda, y más opciones)</li>
+                <li><strong>Cambiar Tema:</strong> <kbd>🌓</kbd></li>
+                <li><strong>Deseleccionar/Cancelar:</strong> <kbd>Esc</kbd></li>
+             </ul>
+            <h4>Sistema de Addons</h4>
+            <p>Usa el Gestor de Addons (accesible desde <kbd>🛠️</kbd> Configuración) para ver y habilitar/deshabilitar addons. Los cambios requieren recargar la página.</p>
+            <h4>Historial de Versiones</h4>
+            <ul>
+                 <li>
+                    <strong>v0.2.2 (Actual)</strong>
+                     <ul style="margin-left: 20px; margin-top: 5px; list-style-type: disc;">
+                        <li>Centralizada configuración: Gestor Addons, Ayuda y Toggle Cardinalidad movidos a modal de Configuración (🛠️).</li>
+                        <li>Eliminado addon "Original Cardinality Toggle" (funcionalidad integrada).</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>v0.2.1</strong>
+                     <ul style="margin-left: 20px; margin-top: 5px; list-style-type: disc;">
+                        <li>Añadido addon "UI Customizer" con escalado de UI y posición de barra de herramientas.</li>
+                        <li>Añadido botón y modal de Configuración (🛠️) (infraestructura).</li>
+                        <li>Ajustes CSS para usar unidades `rem`.</li>
+                    </ul>
+                </li>
+                <!-- ... otras versiones ... -->
+            </ul>
+            <p style="font-size: 0.8em; text-align: right; color: var(--text-muted-color); margin-top: 20px; margin-bottom: 5px;"> Zen ERD v0.2.2 </p>
+            <p style="font-size: 0.85em; text-align: center; color: var(--text-muted-color);">Haz clic fuera de esta ventana para cerrarla.</p>
+        </div>
+     </div>
+
+     <!-- HTML Structure: Addon Manager Modal -->
+     <div id="addonManagerModalOverlay"> <div id="addonManagerModalContent"> <button id="addonManagerCloseBtn" title="Cerrar">×</button> <h4>Gestor de Addons</h4> <ul id="addonList"><li>Cargando addons...</li></ul> <div id="addonLoadSection"> <button id="loadAddonFileBtn">Cargar Addon desde Archivo (.js)</button> <p style="font-size:0.85em; color: var(--text-muted-color); margin-top:10px;">Nota: Habilitar/deshabilitar addons requiere recargar la página para tener efecto.</p> </div> </div> </div>
+
+    <!-- HTML Structure: Settings Modal -->
+    <div id="settingsModalOverlay">
+        <div id="settingsModalContent">
+            <button id="settingsModalCloseBtn" title="Cerrar">×</button>
+            <h4>Configuración de la Aplicación</h4>
+            <div id="settingsContainer">
+                <div class="setting-group">
+                    <h5>Herramientas y Ayuda</h5>
+                    <button id="settingsOpenAddonManagerBtn" class="modal-access-button">⚙️ Gestor de Addons</button>
+                    <button id="settingsOpenHelpBtn" class="modal-access-button">❓ Ver Ayuda</button>
+                </div>
+                <div class="setting-group">
+                    <h5>Visualización del Diagrama</h5>
+                    <label>
+                        <input type="checkbox" id="settingsToggleOriginalCardinalityCheckbox"> Mostrar cardinalidades originales detalladas (ej. (m,n))
+                    </label>
+                    <!-- Más configuraciones de visualización aquí -->
+                </div>
+                <div class="setting-group">
+                    <h5>Apariencia General</h5>
+                    <p>Opciones de tema, escala de UI y posición de barra de herramientas se gestionan directamente desde la barra principal.</p>
+                </div>
+            </div>
+            <p style="font-size: 0.85em; text-align: center; color: var(--text-muted-color); margin-top: 20px; margin-bottom: 5px;">
+                Haz clic fuera de esta ventana para cerrarla.
+            </p>
+        </div>
+    </div>
+
+
+    <script>
+    // <![CDATA[
+    /**
+     * Zen ERD Standalone Script
+     * Version: 0.2.2
+     * Includes core logic, addon manager, grid snapping, UI scaling/positioning, embedded addons, PNG export, and centralized settings modal.
+     */
+
+    // --- Constants ---
+    const MAX_HISTORY = 30; const THEME_STORAGE_KEY = 'zenErdThemePreference'; const ADDON_STATUS_STORAGE_KEY = 'zenErdAddonStatus'; const GRID_STATUS_STORAGE_KEY = 'zenErdGridStatus'; const UI_SCALE_STORAGE_KEY = 'zenErdUIScale'; const TOOLBAR_POSITION_STORAGE_KEY = 'zenErdToolbarPos'; const DETAILED_CARDINALITY_STORAGE_KEY = 'zenErdDetailedCardinality'; const CONNECTION_POINT_SIZE = 12; const ATTR_RADIUS = 8; const ATTR_V_SPACE = 6; const ATTR_DISTANCE = 35; const ENTITY_DEFAULTS = { width: 130, height: 65 }; const RELATION_DIAMOND_SIZE = 22; const RELATION_NAME_OFFSET_Y = 3; const ZOOM_SENSITIVITY = 0.1; const MIN_ZOOM = 0.15; const MAX_ZOOM = 4.0; const ENTITY_FONT_SIZE = 13; const ATTR_FONT_SIZE = 11.5; const RELATION_NAME_FONT_SIZE = 11.5; const CARD_FONT_SIZE = 10.5; const CARD_OFFSET = 12; const SELECTION_LINE_WIDTH = 2.5; const DEFAULT_LINE_WIDTH = 1; const TARGET_LINE_WIDTH = 2.5; const GRID_SIZE = 20; const GRID_LINE_WIDTH = 0.5; const EXPORT_PADDING = 50; const UI_SCALE_STEP = 0.1; const MIN_UI_SCALE = 0.7; const MAX_UI_SCALE = 1.5; const BASE_FONT_SIZE_PX = 16;
+
+    // --- DOM Elements (assigned in initialize) ---
+    let canvas, ctx, toolbar, selectedInfoToolbar, canvasContainer, contextMenu, contextMenuItems, themeToggleBtn, body, helpModalOverlay, helpModalContent, helpModalCloseBtn, undoBtn, redoBtn, saveBtn, loadBtn, exportPngBtn, clearBtn, zoomInBtn, zoomOutBtn, resetZoomPanBtn, addonFileInput, addonManagerModalOverlay, addonManagerModalContent, addonManagerCloseBtn, addonListUl, loadAddonFileBtn, addonElementCounterDisplay, gridToggleBtn, uiScaleDownBtn, uiScaleDisplay, uiScaleUpBtn, toolbarPosTopBtn, toolbarPosBottomBtn, toolbarPosLeftBtn, toolbarPosRightBtn, settingsBtn, settingsModalOverlay, settingsModalContent, settingsModalCloseBtn, settingsOpenAddonManagerBtn, settingsOpenHelpBtn, settingsToggleOriginalCardinalityCheckbox;
+
+    // --- Addon System Globals ---
+    window.ZenERD = window.ZenERD || {}; const registeredAddons = []; let addonApi = {}; const addonEventListeners = {}; const loadedAddonNames = new Set(); let addonEnabledStatus = {};
+    let showDetailedCardinalities = true; // Default, loaded from localStorage
+
+    // --- App State ---
+    let isGridSnapActive = false; let uiScaleFactor = 1.0; let toolbarPosition = 'top';
+    let elements = []; let selectedElement = null; let hoveredElement = null; let draggingElement = null; let dragOffsetX = 0, dragOffsetY = 0; let isPanning = false; let panStartX = 0, panStartY = 0; let scale = 1.0; let originX = 0, originY = 0; let history = []; let redoHistory = []; let isConnecting = false; let connectStartElement = null; let connectCurrentX = 0, connectCurrentY = 0; let connectTargetElement = null; let activeConnectionPoints = []; let toolbarTimeout; let isExporting = false;
+
+     // --- Persistence ---
+    function loadAddonStatus() { try { const s=localStorage.getItem(ADDON_STATUS_STORAGE_KEY); addonEnabledStatus = s?JSON.parse(s):{}; } catch (e) { addonEnabledStatus = {}; } }
+    function saveAddonStatus() { try { localStorage.setItem(ADDON_STATUS_STORAGE_KEY, JSON.stringify(addonEnabledStatus)); } catch (e) {} }
+    function loadGridStatus() { try { isGridSnapActive = localStorage.getItem(GRID_STATUS_STORAGE_KEY) === 'true'; } catch(e){ isGridSnapActive = false; } }
+    function saveGridStatus() { try { localStorage.setItem(GRID_STATUS_STORAGE_KEY, isGridSnapActive ? 'true' : 'false'); } catch(e){} }
+    function loadUIScale() { try { const s=localStorage.getItem(UI_SCALE_STORAGE_KEY); if(s){let p=parseFloat(s);uiScaleFactor=Math.max(MIN_UI_SCALE,Math.min(MAX_UI_SCALE,p));} else uiScaleFactor=1.0; } catch(e){uiScaleFactor=1.0;} }
+    function saveUIScale() { try { localStorage.setItem(UI_SCALE_STORAGE_KEY, uiScaleFactor.toString()); } catch(e){} }
+    function loadToolbarPosition() { try { const p=localStorage.getItem(TOOLBAR_POSITION_STORAGE_KEY); toolbarPosition = p && ['top','bottom','left','right'].includes(p) ? p : 'top'; } catch(e){ toolbarPosition = 'top'; } }
+    function saveToolbarPosition() { try { localStorage.setItem(TOOLBAR_POSITION_STORAGE_KEY, toolbarPosition); } catch(e){} }
+    function loadDetailedCardinalitySetting() { try { const s = localStorage.getItem(DETAILED_CARDINALITY_STORAGE_KEY); showDetailedCardinalities = s === null ? true : (s === 'true'); } catch(e) { showDetailedCardinalities = true; } }
+    function saveDetailedCardinalitySetting() { try { localStorage.setItem(DETAILED_CARDINALITY_STORAGE_KEY, showDetailedCardinalities ? 'true' : 'false'); } catch(e){} }
+
+
+    // --- Addon Registration ---
+    window.ZenERD.registerAddon = function(c) { if (!c || typeof c.name !== 'string' || typeof c.init !== 'function') return false; if (registeredAddons.some(a => a.name === c.name)) return false; registeredAddons.push(c); if (addonEnabledStatus[c.name] === undefined) { addonEnabledStatus[c.name] = true; saveAddonStatus(); } return true; };
+
+    // --- Helper Functions ---
+    function getMousePos(e) { const r=canvas.getBoundingClientRect(); return { x: (e.clientX-r.left-originX)/scale, y: (e.clientY-r.top-originY)/scale }; }
+    function getColor(t) { const n={entityFill:"--entity-fill",entityStroke:"--entity-stroke",attributeFill:"--attribute-fill",attributeStroke:"--attribute-stroke",pkFill:"--attribute-pk-fill",akFill1:"--attribute-ak-fill1",akFill2:"--attribute-ak-fill2",relationFill:"--relation-fill",relationStroke:"--relation-stroke",relationName:"--relation-name-color",line:"--line-color",text:"--text-element-color",cardinality:"--cardinality-color",selectBorder:"--select-color",selectGlow:"--select-glow",connectTargetBorder:"--connect-target-color",connectTargetGlow:"--connect-target-glow",connectingLine:"--connecting-line",connectorHover:"--connector-hover",canvasBg:"--canvas-bg",connectionPointBg:"--connection-point-bg",connectionPointBorder:"--connection-point-border",dangerColor:"--danger-color", gridColor:"--grid-color"}[t]||"--text-color"; return getComputedStyle(body).getPropertyValue(n).trim(); }
+    function getLineConnectionPoint(r,p){const c=r.x,o=r.y,a=r.width/2,d=r.height/2,l=p.x-c,f=p.y-o;let g={x:c,y:o};if(l===0&&f===0)return{x:c+a,y:o};const h=Math.atan2(f,l),i=Math.tan(h);if(Math.abs(f)*a<=Math.abs(l)*d){g.x=c+Math.sign(l)*a;g.y=o+Math.sign(l)*a*i}else{g.x=c+Math.sign(f)*d/i;g.y=o+Math.sign(f)*d}g.x=Math.max(c-a,Math.min(c+a,g.x));g.y=Math.max(o-d,Math.min(o+d,g.y));return g}
+    function getDiamondConnectionPoint(c,s,p){const d=p.x-c.x,o=p.y-c.y;if(d===0&&o===0)return{x:c.x+s,y:c.y};const a=Math.atan2(o,d),l=Math.abs(Math.cos(a)),f=Math.abs(Math.sin(a)),g=s/(l+f);return{x:c.x+g*Math.cos(a),y:c.y+g*Math.sin(a)}}
+    function parseMaxCardinality(c){if(!c)return"?";const m=c.match(/[([ ]?\s*(\w+)\s*[,|]\s*([\w*+nNm]+)\s*[)\]]/);let v="?";if(m&&m[2])v=m[2].trim().toUpperCase();else{const s=c.trim().toUpperCase();if(['1','N','M','*'].includes(s))v=s;}if(v==='1')return'1';else if(['N','M','*'].includes(v)||(!isNaN(parseInt(v))&&parseInt(v)>1))return'N';else return'N'}
+    function getCombinedCardinality(c,d){const t=parseMaxCardinality(c),e=parseMaxCardinality(d);if(t==='N'&&e==='N')return"N:M";else return`${t}:${e}`}
+    function getDiagramBounds() { if (elements.length === 0) return null; let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity; const tempCanvas = document.createElement('canvas'); const tempCtx = tempCanvas.getContext('2d'); if (!tempCtx) return null; const bodyStyles = getComputedStyle(body); tempCtx.font = `${ATTR_FONT_SIZE}px ${bodyStyles.getPropertyValue('--font-main').split(',')[0].trim()}`; elements.forEach(el => { let elMinX = Infinity, elMinY = Infinity, elMaxX = -Infinity, elMaxY = -Infinity; if (el.type === 'entity') { const hw = el.width / 2; const hh = el.height / 2; elMinX = el.x - hw; elMinY = el.y - hh; elMaxX = el.x + hw; elMaxY = el.y + hh; } else if (el.type === 'relationship') { el.updateDiamondPosition(); const sz = el.size || RELATION_DIAMOND_SIZE; const labelHeight = RELATION_NAME_FONT_SIZE + CARD_FONT_SIZE + 5; elMinX = el.diamondX - sz; elMinY = el.diamondY - sz; elMaxX = el.diamondX + sz; elMaxY = el.diamondY + sz + RELATION_NAME_OFFSET_Y + labelHeight; if (showDetailedCardinalities) { elMinY -= CARD_OFFSET * 1.5; elMaxY += CARD_OFFSET * 1.5; elMinX -= CARD_OFFSET * 1.5; elMaxX += CARD_OFFSET * 1.5; } } else if (el.type === 'attribute') { const owner = el.getOwner(); if (!owner) return; const pos = el.getAbsolutePosition(owner); const radius = el.radius; const approxLabelWidth = tempCtx.measureText(el.name).width + 10; elMinX = pos.x - radius; elMinY = pos.y - radius; elMaxX = pos.x + radius + el.labelOffsetX + approxLabelWidth; elMaxY = pos.y + radius; } else { return; } minX = Math.min(minX, elMinX); minY = Math.min(minY, elMinY); maxX = Math.max(maxX, elMaxX); maxY = Math.max(maxY, elMaxY); }); if (minX === Infinity) return null; if (minX === maxX) { minX -= 10; maxX += 10; } if (minY === maxY) { minY -= 10; maxY += 10; } return { minX, minY, maxX, maxY }; }
+
+    // --- Element Classes ---
+    class Entity { constructor(x,y,n="Entidad",i=null,w=ENTITY_DEFAULTS.width,h=ENTITY_DEFAULTS.height){this.id=i||`ent_${Date.now()}_${Math.random().toString(16).slice(2)}`;this.x=x;this.y=y;this.name=n;this.width=w;this.height=h;this.attributes=[];this.type='entity'}addAttribute(a){if(!this.attributes.includes(a))this.attributes.push(a)}removeAttribute(a){this.attributes=this.attributes.filter(id=>id!==a)}isPointInside(x,y){const w=this.width/2,h=this.height/2;return x>=this.x-w&&x<=this.x+w&&y>=this.y-h&&y<=this.y+h}moveTo(x,y){this.x=x;this.y=y}resize(w,h){this.width=Math.max(50,w);this.height=Math.max(40,h)}toJSON(){return{id:this.id,type:this.type,x:this.x,y:this.y,name:this.name,width:this.width,height:this.height,attributes:this.attributes}}
+        drawBody(isSelected, isHovered, isConnectTarget) { if (isExporting) isSelected = isHovered = isConnectTarget = false; const currentCtx = ctx; const e=isSelected||isConnectTarget;let k=getColor('entityStroke'),l=DEFAULT_LINE_WIDTH,g=null;if(isSelected){k=getColor('selectBorder');l=SELECTION_LINE_WIDTH;g=getColor('selectGlow')}if(isConnectTarget){k=getColor('connectTargetBorder');l=TARGET_LINE_WIDTH;g=getColor('connectTargetGlow')}if(e&&g){currentCtx.shadowColor=g;currentCtx.shadowBlur=10}else{currentCtx.shadowColor='transparent';currentCtx.shadowBlur=0}const r=this.x-this.width/2,c=this.y-this.height/2;currentCtx.fillStyle=getColor('entityFill');currentCtx.strokeStyle=k;currentCtx.lineWidth=l;currentCtx.fillRect(r,c,this.width,this.height);currentCtx.strokeRect(r,c,this.width,this.height);currentCtx.shadowColor='transparent';currentCtx.shadowBlur=0;currentCtx.fillStyle=getColor('textElementColor');currentCtx.textAlign='center';currentCtx.textBaseline='middle';const f=getComputedStyle(body).getPropertyValue('--font-main').split(',')[0].trim();currentCtx.font=`bold ${ENTITY_FONT_SIZE}px ${f}`;currentCtx.fillText(this.name,this.x,this.y)}}
+    class Attribute { constructor(s,o,d,n="atributo",t="simple",w=null,i=null){this.id=i||`attr_${Date.now()}_${Math.random().toString(16).slice(2)}`;this.attachmentSide=s;this.offset=o;this.distance=d;this.name=n;this.attrType=t;this.ownerId=w;this.radius=ATTR_RADIUS;this.labelOffsetX=6;this.type='attribute'}getOwner(){return elements.find(e=>e.id===this.ownerId)}getAbsolutePosition(o){if(!o)return{x:0,y:0};let c=0,r=0,h=0,f=0;if(o.type==='entity'){c=o.x;r=o.y;h=o.width/2;f=o.height/2}else if(o.type==='relationship'){o.updateDiamondPosition();c=o.diamondX;r=o.diamondY;h=o.size||RELATION_DIAMOND_SIZE;f=o.size||RELATION_DIAMOND_SIZE}else return{x:0,y:0};let a=c,b=r;switch(this.attachmentSide){case'top':b=r-f-this.distance;a=c+this.offset;break;case'bottom':b=r+f+this.distance;a=c+this.offset;break;case'left':a=c-h-this.distance;b=r+this.offset;break;case'right':a=c+h+this.distance;b=r+this.offset;break}return{x:a,y:b}}getAttachmentPointOnOwner(o){if(!o)return{x:0,y:0};const p=this.getAbsolutePosition(o);if(o.type==='entity')return getLineConnectionPoint(o,p);else if(o.type==='relationship'){o.updateDiamondPosition();return getDiamondConnectionPoint({x:o.diamondX,y:o.diamondY},o.size||RELATION_DIAMOND_SIZE,p)}return{x:0,y:0}}snapToSide(x,y,o){if(!o)return;let c=0,r=0,w=0,h=0;if(o.type==='entity'){c=o.x;r=o.y;w=o.width/2;h=o.height/2}else if(o.type==='relationship'){o.updateDiamondPosition();c=o.diamondX;r=o.diamondY;w=o.size||RELATION_DIAMOND_SIZE;h=o.size||RELATION_DIAMOND_SIZE}else return;const d=x-c,l=y-r,a=Math.atan2(l,d),p=Math.PI/4,m=5;if(a>-p&&a<=p){this.attachmentSide='right';this.offset=l;this.distance=Math.max(m,d-w);this.offset=Math.max(-h,Math.min(h,this.offset))}else if(a>p&&a<=3*p){this.attachmentSide='bottom';this.offset=d;this.distance=Math.max(m,l-h);this.offset=Math.max(-w,Math.min(w,this.offset))}else if(a>3*p||a<=-3*p){this.attachmentSide='left';this.offset=l;this.distance=Math.max(m,-d-w);this.offset=Math.max(-h,Math.min(h,this.offset))}else{this.attachmentSide='top';this.offset=d;this.distance=Math.max(m,-l-h);this.offset=Math.max(-w,Math.min(w,this.offset))}}isPointInside(x,y,p){const d=(x-p.x)**2+(y-p.y)**2;return d<=(this.radius*1.8)**2}toJSON(){return{id:this.id,type:this.type,attachmentSide:this.attachmentSide,offset:this.offset,distance:this.distance,name:this.name,attrType:this.attrType,ownerId:this.ownerId}}
+        drawShape(isSelected, absPos) { if(isExporting)isSelected=false; const currentCtx = ctx; const l=absPos.x+this.radius+this.labelOffsetX,y=absPos.y;let g=null;currentCtx.lineWidth=isSelected?SELECTION_LINE_WIDTH:DEFAULT_LINE_WIDTH;currentCtx.strokeStyle=isSelected?getColor('selectBorder'):getColor('attributeStroke');if(isSelected)g=getColor('selectGlow');if(isSelected&&g){currentCtx.shadowColor=g;currentCtx.shadowBlur=8}else{currentCtx.shadowColor='transparent';currentCtx.shadowBlur=0}if(this.attrType==='pk'){currentCtx.fillStyle=getColor('pkFill');currentCtx.beginPath();currentCtx.arc(absPos.x,absPos.y,this.radius,0,Math.PI*2);currentCtx.fill();currentCtx.stroke()}else if(this.attrType==='ak'){const r=this.radius;currentCtx.fillStyle=getColor('akFill1');currentCtx.beginPath();currentCtx.arc(absPos.x,absPos.y,r,Math.PI/2,3*Math.PI/2);currentCtx.closePath();currentCtx.fill();currentCtx.fillStyle=getColor('akFill2');currentCtx.beginPath();currentCtx.arc(absPos.x,absPos.y,r,3*Math.PI/2,Math.PI/2);currentCtx.closePath();currentCtx.fill();currentCtx.beginPath();currentCtx.arc(absPos.x,absPos.y,r,0,Math.PI*2);currentCtx.stroke()}else{currentCtx.fillStyle=getColor('attributeFill');currentCtx.beginPath();currentCtx.arc(absPos.x,absPos.y,this.radius,0,Math.PI*2);currentCtx.fill();currentCtx.stroke()}currentCtx.shadowColor='transparent';currentCtx.shadowBlur=0;currentCtx.fillStyle=isSelected?getColor('selectBorder'):getColor('textElementColor');currentCtx.textAlign='left';currentCtx.textBaseline='middle';const f=getComputedStyle(body).getPropertyValue('--font-main').split(',')[0].trim();currentCtx.font=`${ATTR_FONT_SIZE}px ${f}`;currentCtx.fillText(this.name,l,y)}
+        drawLine(o){if(!o)return;const p=this.getAbsolutePosition(o),e=this.getAttachmentPointOnOwner(o);ctx.beginPath();ctx.moveTo(e.x,e.y);ctx.lineTo(p.x,p.y);ctx.strokeStyle=getColor('line');ctx.lineWidth=DEFAULT_LINE_WIDTH;ctx.stroke()}}
+    class Relationship { constructor(e,t,n="Relación",c="(1,1)",r="(0,n)",i=null,z=null){this.id=i||`rel_${Date.now()}_${Math.random().toString(16).slice(2)}`;this.entity1Id=e;this.entity2Id=t;this.name=n;this.card1=c;this.card2=r;this.attributes=[];this.type='relationship';this.diamondX=0;this.diamondY=0;this.size=z!==null&&typeof z==='number'&&z>0?z:RELATION_DIAMOND_SIZE;}getEntity1(){return elements.find(l=>l.id===this.entity1Id)}getEntity2(){return elements.find(l=>l.id===this.entity2Id)}addAttribute(a){if(!this.attributes.includes(a))this.attributes.push(a)}removeAttribute(a){this.attributes=this.attributes.filter(id=>id!==a)}updateDiamondPosition(){const e=this.getEntity1(),t=this.getEntity2();if(!e||!t)return;this.diamondX=(e.x+t.x)/2;this.diamondY=(e.y+t.y)/2}isPointInside(x,y){this.updateDiamondPosition();const d=Math.abs(x-this.diamondX),o=Math.abs(y-this.diamondY),t=(this.size||RELATION_DIAMOND_SIZE)*0.3;return(d+o)<=((this.size||RELATION_DIAMOND_SIZE)+t)}moveTo(x,y){}toJSON(){return{id:this.id,type:this.type,entity1Id:this.entity1Id,entity2Id:this.entity2Id,name:this.name,card1:this.card1,card2:this.card2,attributes:this.attributes,size:this.size}}
+        draw(isSelected) {
+            if (isExporting) isSelected = false; this.updateDiamondPosition();const e1=this.getEntity1(),e2=this.getEntity2();if(!e1||!e2)return;
+            const dx=this.diamondX,dy=this.diamondY,sz=this.size||RELATION_DIAMOND_SIZE;let glowColor=null; const currentCtx = ctx;
+            if(isSelected)glowColor=getColor('selectGlow');if(isSelected&&glowColor){currentCtx.shadowColor=glowColor;currentCtx.shadowBlur=10}else{currentCtx.shadowColor='transparent';currentCtx.shadowBlur=0}
+            currentCtx.beginPath();currentCtx.moveTo(dx,dy-sz);currentCtx.lineTo(dx+sz,dy);currentCtx.lineTo(dx,dy+sz);currentCtx.lineTo(dx-sz,dy);currentCtx.closePath();currentCtx.fillStyle=getColor('relationFill');currentCtx.strokeStyle=isSelected?getColor('selectBorder'):getColor('relationStroke');currentCtx.lineWidth=isSelected?SELECTION_LINE_WIDTH:DEFAULT_LINE_WIDTH;currentCtx.fill();currentCtx.stroke();currentCtx.shadowColor='transparent';currentCtx.shadowBlur=0;
+            const primaryFont=getComputedStyle(body).getPropertyValue('--font-main').split(',')[0].trim(),nameFontSize=RELATION_NAME_FONT_SIZE*0.9,cardFontSize=CARD_FONT_SIZE*0.9,textVerticalOffset=nameFontSize*0.6;
+            currentCtx.fillStyle=getColor('relationName');currentCtx.textAlign='center';currentCtx.textBaseline='middle';currentCtx.font=`bold ${nameFontSize}px ${primaryFont}`;const nameY=dy-(cardFontSize/2)*(this.card1&&this.card2?0.8:0);currentCtx.fillText(this.name,dx,nameY);
+            if(this.card1&&this.card2){const combinedCardinality=getCombinedCardinality(this.card1,this.card2);currentCtx.fillStyle=getColor('cardinality');currentCtx.font=`${cardFontSize}px ${primaryFont}`;const cardY=dy+textVerticalOffset;currentCtx.fillText(combinedCardinality,dx,cardY);}
+            const p1=getLineConnectionPoint(e1,{x:dx,y:dy}),p2=getLineConnectionPoint(e2,{x:dx,y:dy}),d1=getDiamondConnectionPoint({x:dx,y:dy},sz,p1),d2=getDiamondConnectionPoint({x:dx,y:dy},sz,p2);
+            currentCtx.beginPath();currentCtx.moveTo(p1.x,p1.y);currentCtx.lineTo(d1.x,d1.y);currentCtx.moveTo(p2.x,p2.y);currentCtx.lineTo(d2.x,d2.y);currentCtx.strokeStyle=getColor('line');currentCtx.lineWidth=DEFAULT_LINE_WIDTH;currentCtx.stroke();
+             if (showDetailedCardinalities) {
+                const cardFontSizeOriginal=CARD_FONT_SIZE;const cardOffsetOriginal=CARD_OFFSET;
+                currentCtx.fillStyle=getColor('cardinality');currentCtx.font=`${cardFontSizeOriginal}px ${primaryFont}`;currentCtx.textAlign='center';currentCtx.textBaseline='middle';
+                const angle1=Math.atan2(d1.y-p1.y,d1.x-p1.x),midX1=(p1.x+d1.x)/2,midY1=(p1.y+d1.y)/2,cardOffsetX1=cardOffsetOriginal*Math.sin(angle1),cardOffsetY1=-cardOffsetOriginal*Math.cos(angle1);if(this.card1)currentCtx.fillText(this.card1,midX1+cardOffsetX1,midY1+cardOffsetY1);
+                const angle2=Math.atan2(d2.y-p2.y,d2.x-p2.x),midX2=(p2.x+d2.x)/2,midY2=(p2.y+d2.y)/2,cardOffsetX2=cardOffsetOriginal*Math.sin(angle2),cardOffsetY2=-cardOffsetOriginal*Math.cos(angle2);if(this.card2)currentCtx.fillText(this.card2,midX2+cardOffsetX2,midY2+cardOffsetY2);
+            }
+        }
+    }
+
+    // --- Core Drawing & Interaction ---
+    function drawGrid(context) { if (!isGridSnapActive || isExporting) return; context.save(); context.strokeStyle = getColor('gridColor'); context.lineWidth = GRID_LINE_WIDTH / scale; context.setLineDash([2 / scale, 4 / scale]); const cw = context.canvas.width / (window.devicePixelRatio || 1); const ch = context.canvas.height / (window.devicePixelRatio || 1); const vl = -originX / scale; const vt = -originY / scale; const vr = (cw - originX) / scale; const vb = (ch - originY) / scale; const sx = Math.floor(vl / GRID_SIZE) * GRID_SIZE; const sy = Math.floor(vt / GRID_SIZE) * GRID_SIZE; const ex = Math.ceil(vr / GRID_SIZE) * GRID_SIZE; const ey = Math.ceil(vb / GRID_SIZE) * GRID_SIZE; context.beginPath(); for (let x = sx; x <= ex; x += GRID_SIZE) { context.moveTo(x, vt); context.lineTo(x, vb); } for (let y = sy; y <= ey; y += GRID_SIZE) { context.moveTo(vl, y); context.lineTo(vr, y); } context.stroke(); context.restore(); }
+    function redrawCanvas(){
+        const activeCtx = ctx; const activeCanvas = canvas; if (!activeCtx) return;
+        const dpr = window.devicePixelRatio || 1; activeCtx.save();
+        activeCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        if (!isExporting) { activeCtx.fillStyle = getColor('canvasBg'); activeCtx.fillRect(0, 0, activeCanvas.width, activeCanvas.height); }
+        activeCtx.setTransform(dpr * scale, 0, 0, dpr * scale, dpr * originX, dpr * originY);
+        drawGrid(activeCtx);
+        activeCtx.lineCap='round'; activeCtx.lineJoin='round';
+        elements.forEach(e=>{if(e.type==='relationship')e.draw(e===selectedElement&&!isExporting)});
+        elements.forEach(e=>{if(e.type==='attribute'){const o=e.getOwner();if(o)e.drawLine(o)}});
+        elements.forEach(e=>{if(e.type==='entity')e.drawBody(e===selectedElement&&!isExporting,e===hoveredElement&&!isExporting,e===connectTargetElement&&!isExporting)});
+        elements.forEach(e=>{if(e.type==='attribute'){const o=e.getOwner();if(o){const p=e.getAbsolutePosition(o);e.drawShape(e===selectedElement&&!isExporting,p)}}});
+        if(isConnecting&&connectStartElement&&!isExporting){ activeCtx.beginPath();const s=getConnectionPoints(connectStartElement);let p=connectStartElement;if(s.length>0){let c=s[0],m=Infinity;s.forEach(t=>{const d=(t.x-connectCurrentX)**2+(t.y-connectCurrentY)**2;if(d<m){m=d;c=t}});p=c}activeCtx.moveTo(p.x,p.y);activeCtx.lineTo(connectCurrentX,connectCurrentY);activeCtx.strokeStyle=getColor('connectingLine');activeCtx.lineWidth=2/scale;activeCtx.setLineDash([6/scale,6/scale]);activeCtx.stroke();activeCtx.setLineDash([]) }
+        activeCtx.shadowColor='transparent'; activeCtx.shadowBlur=0;
+        activeCtx.lineCap='butt'; activeCtx.lineJoin='miter';
+        activeCtx.restore();
+        if (!isExporting) updateConnectionPointsDOM();
+    }
+    function findElementAtPos(x,y){for(let i=elements.length-1;i>=0;i--){const e=elements[i];if(e.type==='attribute'){const o=e.getOwner();if(o){const p=e.getAbsolutePosition(o);if(e.isPointInside(x,y,p))return e}}}for(let i=elements.length-1;i>=0;i--){const e=elements[i];if(e.type==='entity'&&e.isPointInside(x,y))return e;else if(e.type==='relationship'&&e.isPointInside(x,y))return e}return null}
+    function bringToFront(e){const i=elements.indexOf(e);if(i>-1&&i<elements.length-1){elements.splice(i,1);elements.push(e)}}
+    function updateSelectedInfo(){if(selectedElement){let t=selectedElement.type.charAt(0).toUpperCase()+selectedElement.type.slice(1),n=selectedElement.name||selectedElement.id;if(selectedElement.type==='attribute'){t=`Attr (${selectedElement.attrType})`;const o=selectedElement.getOwner();if(o)n+=` (de ${o.name||o.type})`}else if(selectedElement.type==='relationship')t='Relación';else if(selectedElement.type==='entity')t='Entidad';selectedInfoToolbar.textContent=`Sel: ${t} "${n}"`;selectedInfoToolbar.title=selectedInfoToolbar.textContent}else{selectedInfoToolbar.textContent="Seleccionado: Ninguno";selectedInfoToolbar.title=""}}
+    function getConnectionPoints(e){if(!e||e.type!=='entity')return[];const w=e.width/2,h=e.height/2;return[{x:e.x-w,y:e.y},{x:e.x+w,y:e.y},{x:e.x,y:e.y-h},{x:e.x,y:e.y+h}].map(p=>({x:Math.max(e.x-w,Math.min(e.x+w,p.x)),y:Math.max(e.y-h,Math.min(e.y+h,p.y))}))}
+    function updateConnectionPointsDOM(){activeConnectionPoints.forEach(p=>p.remove());activeConnectionPoints=[];const s=(selectedElement?.type==='entity'&&!isPanning&&draggingElement!==selectedElement)?selectedElement:null;if(s){const p=getConnectionPoints(s);p.forEach(w=>{const x=w.x*scale+originX,y=w.y*scale+originY,e=document.createElement('div');e.className='connection-point visible';e.style.cssText=`left:${x-CONNECTION_POINT_SIZE/2}px;top:${y-CONNECTION_POINT_SIZE/2}px;width:${CONNECTION_POINT_SIZE}px;height:${CONNECTION_POINT_SIZE}px`;e.dataset.entityId=s.id;e.onmousedown=v=>{v.stopPropagation();isConnecting=true;connectStartElement=s;const t=getMousePos(v);connectCurrentX=t.x;connectCurrentY=t.y;hideContextMenu();canvas.style.cursor='crosshair'};canvasContainer.appendChild(e);activeConnectionPoints.push(e)})}}
+
+    // --- Modals & Context Menu ---
+    function showContextMenu(x,y,i){contextMenuItems.innerHTML='';i.forEach(t=>{const l=document.createElement('li');if(t.separator)l.className='separator';else{l.textContent=t.label;if(t.danger)l.classList.add('danger');if(t.disabled){l.classList.add('disabled');l.onclick=e=>e.stopPropagation()}else if(t.action)l.onclick=e=>{e.stopPropagation();t.action();hideContextMenu()}}contextMenuItems.appendChild(l)});const w=contextMenu.offsetWidth,h=contextMenu.offsetHeight,d=document.documentElement.clientWidth,o=document.documentElement.clientHeight;let l=x+5,t=y+5;if(l+w>d-10){l=x-w-5;if(l<10)l=10}if(t+h>o-10){t=y-h-5;if(t<10)t=10}contextMenu.style.left=`${l}px`;contextMenu.style.top=`${t}px`;contextMenu.style.display='block'}
+    function hideContextMenu(){if(contextMenu.style.display==='block')contextMenu.style.display='none'}
+    function showHelpModal(){helpModalOverlay.classList.add('visible')}function hideHelpModal(){helpModalOverlay.classList.remove('visible')}
+    function openAddonManager(){addonListUl.innerHTML='';if(registeredAddons.length===0){addonListUl.innerHTML='<li>No addons registered.</li>'}else{const s=[...registeredAddons].sort((a,b)=>a.name.localeCompare(b.name));s.forEach(a=>{const l=document.createElement('li');const n=addonEnabledStatus[a.name]??true;l.innerHTML=`<div class="addon-info"><span class="addon-name">${a.name}</span><span class="addon-version">v${a.version||'N/A'}</span><span class="addon-desc">${a.description||'No description.'}</span></div><div class="addon-controls"><label class="addon-enable-label"><input type="checkbox" data-addon-name="${a.name}" ${n?'checked':''}> Enabled</label><span class="reload-notice" id="reload-notice-${a.name.replace(/\s+/g,'-')}">Reload to apply</span></div>`;const c=l.querySelector('input[type="checkbox"]');const o=l.querySelector('.reload-notice');c.addEventListener('change',e=>{const t=e.target.dataset.addonName,i=e.target.checked;addonEnabledStatus[t]=i;saveAddonStatus();o.style.display='inline'});addonListUl.appendChild(l)})}addonManagerModalOverlay.classList.add('visible')}
+    function closeAddonManager(){addonManagerModalOverlay.classList.remove('visible')}
+    function showSettingsModal() {
+        if(settingsToggleOriginalCardinalityCheckbox) settingsToggleOriginalCardinalityCheckbox.checked = showDetailedCardinalities;
+        settingsModalOverlay.classList.add('visible');
+    }
+    function hideSettingsModal() { settingsModalOverlay.classList.remove('visible'); }
+
+
+    // --- Undo/Redo ---
+    function saveStateForUndo(n="unknown action"){const s=serializeDiagram();if(redoHistory.length>0){redoHistory=[];updateUndoRedoButtons()}if(history.length>0&&history[history.length-1].state===s){history[history.length-1].actionName=n;history[history.length-1].timestamp=Date.now();updateUndoRedoButtons();return}history.push({state:s,actionName:n,timestamp:Date.now()});if(history.length>MAX_HISTORY)history.shift();updateUndoRedoButtons()}
+    function undoLastAction(){if(history.length<=1)return;const c=history.pop();redoHistory.push(c);const l=history[history.length-1];if(l)loadState(l.state,false);updateUndoRedoButtons()}
+    function redoLastAction(){if(redoHistory.length===0)return;const n=redoHistory.pop();history.push(n);loadState(n.state,false);updateUndoRedoButtons()}
+    function updateUndoRedoButtons(){undoBtn.disabled=history.length<=1;redoBtn.disabled=redoHistory.length===0;undoBtn.title=`Undo ${history.length>1?`(${history[history.length-1].actionName})`:''} (Ctrl+Z)`;redoBtn.title=`Redo ${redoHistory.length>0?`(${redoHistory[redoHistory.length-1].actionName})`:''} (Ctrl+Y)`}
+
+    // --- Serialization / Deserialization ---
+    function serializeDiagram(){return JSON.stringify({elements:elements.map(e=>e.toJSON()),view:{originX,originY,scale}})}
+    let originalDeserializeAndLoad = function(j){try{const d=JSON.parse(j);elements=[];const m=new Map;if(d.elements){d.elements.forEach(i=>{let e=null;if(i.type==='entity')e=new Entity(i.x,i.y,i.name,i.id,i.width??ENTITY_DEFAULTS.width,i.height??ENTITY_DEFAULTS.height);else if(i.type==='relationship')e=new Relationship(i.entity1Id,i.entity2Id,i.name||"Relación",i.card1,i.card2,i.id,i.size);if(e){elements.push(e);m.set(e.id,e)}});d.elements.forEach(i=>{if(i.type==='attribute'){const o=i.ownerId||i.ownerEntityId,w=m.get(o);if(w){const a=new Attribute(i.attachmentSide||'right',i.offset??0,i.distance??ATTR_DISTANCE,i.name,i.attrType,o,i.id);elements.push(a);m.set(a.id,a);w.addAttribute(a.id)}}});elements=elements.filter(e=>{if(e.type==='relationship'){const v=m.has(e.entity1Id)&&m.has(e.entity2Id);if(!v)console.warn(`Rel ${e.id} removed.`);return v}if(e.type==='attribute'){const v=m.has(e.ownerId);if(!v)console.warn(`Attr ${e.id} removed.`);return v}return true});elements.forEach(e=>{if(e.type==='entity'||e.type==='relationship')e.attributes=e.attributes.filter(a=>m.has(a)&&m.get(a).type==='attribute')})}if(d.view){originX=d.view.originX||0;originY=d.view.originY||0;scale=Math.max(MIN_ZOOM,Math.min(MAX_ZOOM,d.view.scale||1.0))}else{originX=0;originY=0;scale=1.0}selectedElement=null;draggingElement=null;hoveredElement=null;connectTargetElement=null;isConnecting=false;isPanning=false;updateSelectedInfo();redrawCanvas();emitAddonEvent('diagramLoaded',elements);return true}catch(e){console.error("Error loading diagram:",e);alert("Error loading diagram.");elements=[];originX=0;originY=0;scale=1.0;selectedElement=null;draggingElement=null;redrawCanvas();updateSelectedInfo();return false}};
+    function deserializeAndLoad(j){return originalDeserializeAndLoad(j)}
+    function loadState(s,h=true){if(deserializeAndLoad(s)){if(h){const c=history.length>0?history[history.length-1].state:null;if(s!==c){redoHistory=[];const a=typeof h==='string'?h:"state loaded";saveStateForUndo(a)}}updateUndoRedoButtons()}else console.error("Failed to load state.")}
+
+    // --- File Operations / Export ---
+    function saveDiagramToFile(){try{const d=serializeDiagram(),b=new Blob([d],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;const t=new Date().toISOString().slice(0,19).replace(/[-T:]/g,"");a.download=`zen-erd-diagram-${t}.json`;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);saveBtn.style.color=getColor('connectTargetBorder');setTimeout(()=>{saveBtn.style.color=''},1000)}catch(e){console.error("Error saving:",e);alert("Error saving.");saveBtn.style.color=getColor('dangerColor');setTimeout(()=>{saveBtn.style.color=''},1500)}}
+    function loadDiagramFromFile(){const i=document.createElement('input');i.type='file';i.accept='.json,application/json';i.onchange=v=>{const f=v.target.files[0];if(!f)return;const r=new FileReader;r.onload=e=>{const d=e.target.result;if(confirm("Load from file?")){loadState(d,"load diagram (file)")}else console.log("Load cancelled.");i.value=null};r.onerror=e=>{console.error("Read error:",e);alert(`Error reading file: ${f.name}`);i.value=null};r.readAsText(f)};i.click()}
+    /** Exporta el diagrama actual como imagen PNG. */
+    function exportDiagramToPNG() {
+        console.log("Starting PNG export...");
+        const originalScale = scale; const originalOriginX = originX; const originalOriginY = originY;
+        const originalIsExporting = isExporting; const originalCtxRef = ctx; // Guardar referencia REAL
+        isExporting = true;
+
+        try {
+            const bounds = getDiagramBounds(); if (!bounds) { alert("Diagram is empty."); return; }
+            const exportWidth = Math.round(bounds.maxX - bounds.minX) + EXPORT_PADDING * 2;
+            const exportHeight = Math.round(bounds.maxY - bounds.minY) + EXPORT_PADDING * 2;
+
+            let exportCanvas, exportCtx;
+            try { exportCanvas = new OffscreenCanvas(exportWidth, exportHeight); exportCtx = exportCanvas.getContext('2d', { alpha: false }); if (!exportCtx) throw new Error("Offscreen fail."); }
+            catch (e) { exportCanvas = document.createElement('canvas'); exportCanvas.width = exportWidth; exportCanvas.height = exportHeight; exportCtx = exportCanvas.getContext('2d', { alpha: false }); if (!exportCtx) throw new Error("Canvas context fail."); }
+
+            // Dibujar fondo y preparar contexto temporal
+            exportCtx.fillStyle = getColor('canvasBg'); exportCtx.fillRect(0, 0, exportWidth, exportHeight);
+            const tempOriginX = EXPORT_PADDING - bounds.minX; const tempOriginY = EXPORT_PADDING - bounds.minY;
+            exportCtx.save(); exportCtx.translate(tempOriginX, tempOriginY); // Aplicar origen
+
+            // --- Dibujar elementos usando el contexto temporal ---
+            // Guardar y sobrescribir estado GLOBAL temporalmente
+            const backupScale = scale; scale = 1.0;
+            const backupOriginX = originX; originX = 0;
+            const backupOriginY = originY; originY = 0;
+            const backupCtx = ctx; ctx = exportCtx; // Usar contexto de exportación
+
+            // Llamar a las funciones de dibujo (ahora usarán exportCtx y scale=1)
+            exportCtx.lineCap = 'round'; exportCtx.lineJoin = 'round';
+            elements.forEach(e => { if (e.type === 'relationship') e.draw(false); });
+            elements.forEach(e => { if (e.type === 'attribute') { const o = e.getOwner(); if (o) e.drawLine(o); } });
+            elements.forEach(e => { if (e.type === 'entity') e.drawBody(false, false, false); });
+            elements.forEach(e => { if (e.type === 'attribute') { const o = e.getOwner(); if (o) { const p = e.getAbsolutePosition(o); e.drawShape(false, p); } } });
+            exportCtx.lineCap = 'butt'; exportCtx.lineJoin = 'miter';
+
+            // Restaurar estado GLOBAL
+            ctx = backupCtx; scale = backupScale; originX = backupOriginX; originY = backupOriginY;
+
+            exportCtx.restore(); // Restaurar estado del contexto de exportación
+
+            // --- Generar y descargar ---
+            const processExport = (blob) => { if(!blob) throw new Error("Blob creation failed"); const dataURL = URL.createObjectURL(blob); const link = document.createElement('a'); const timestamp = new Date().toISOString().slice(0, 19).replace(/[-T:]/g, ""); link.download = `zen-erd-diagram-${timestamp}.png`; link.href = dataURL; document.body.appendChild(link); link.click(); document.body.removeChild(link); URL.revokeObjectURL(dataURL); console.log("PNG Export successful."); };
+            if (exportCanvas.toBlob) { exportCanvas.toBlob(processExport, 'image/png'); }
+            else { console.warn("canvas.toBlob not supported, using dataURL fallback (might fail for large images)."); processExport(dataURLtoBlob(exportCanvas.toDataURL('image/png'))); }
+
+        } catch (error) { console.error("Error during PNG export:", error); alert("Error exporting PNG. See console.");
+        } finally {
+            // --- Restaurar estado original SIEMPRE ---
+             isExporting = originalIsExporting;
+             // No es necesario restaurar ctx, scale, originX/Y globales porque ya se hizo
+             console.log("Export finished, global state restored.");
+             // redrawCanvas(); // Puede que no sea necesario redibujar el principal
+        }
+    }
+    function clearDiagram(){if(elements.length>0&&confirm("Clear diagram? (Can undo)")){saveStateForUndo("clear diagram");elements=[];selectedElement=null;draggingElement=null;hoveredElement=null;connectTargetElement=null;isConnecting=false;isPanning=false;originX=0;originY=0;scale=1.0;updateSelectedInfo();redrawCanvas();emitAddonEvent('diagramCleared');redoHistory=[];updateUndoRedoButtons()}else if(elements.length===0)resetView()}
+
+    // --- UI Handlers ---
+    function handleAddEntity(x,y){hideContextMenu();const n=prompt("Entity name:","New Entity");if(n&&n.trim()){const e=x??(canvas.getBoundingClientRect().width/scale/2-originX/scale),t=y??(canvas.getBoundingClientRect().height/scale/2-originY/scale),d=new Entity(e,t,n.trim());saveStateForUndo("add entity");elements.push(d);selectedElement=d;updateSelectedInfo();redrawCanvas();emitAddonEvent('elementAdded',d)}}
+    function handleAddAttribute(t){hideContextMenu();let o=selectedElement;if(selectedElement?.type==='attribute')o=selectedElement.getOwner();if(!o||(o.type!=='entity'&&o.type!=='relationship')){alert("Select owner first.");return}const l=o.type==='entity'?'Entity':'Rel',d=`attr_${t}_${o.attributes?.length||0+1}`,n=prompt(`New ${t} attr for ${l} "${o.name}":`,d);if(n&&n.trim()){let s='right',f=0,g=ATTR_DISTANCE;const a=o.getAttributeObjects?o.getAttributeObjects():[],b=a.filter(t=>t.attachmentSide===s).length;f=(ATTR_RADIUS*2+ATTR_V_SPACE)*b;if(o.type==='entity')f-=(o.height/2-ATTR_RADIUS);else if(o.type==='relationship')f-=(o.size||RELATION_DIAMOND_SIZE)-ATTR_RADIUS;const r=new Attribute(s,f,g,n.trim(),t,o.id);saveStateForUndo(`add attr to ${o.type}`);elements.push(r);o.addAttribute(r.id);selectedElement=r;updateSelectedInfo();redrawCanvas();emitAddonEvent('elementAdded',r)}}
+    function handleEdit(){hideContextMenu();if(!selectedElement){alert("Select element.");return}const e=selectedElement.type;let c=false;saveStateForUndo(`edit ${e} (start)`);if(e==='entity'||e==='attribute'||e==='relationship'){const t=selectedElement.name,l=e==='entity'?'entity':e==='attribute'?'attribute':'relation',n=prompt(`New name for ${l} "${t}":`,t);if(n!==null&&n.trim()!==""&&n.trim()!==t){selectedElement.name=n.trim();c=true}}if(e==='relationship'){const t=selectedElement.getEntity1(),l=selectedElement.getEntity2();if(t&&l){const n=selectedElement.card1,r=prompt(`Card near "${t.name}" (${n}):`,n);if(r!==null&&r!==n){selectedElement.card1=r;c=true}if(r!==null){const s=selectedElement.card2,u=prompt(`Card near "${l.name}" (${s}):`,s);if(u!==null&&u!==s){selectedElement.card2=u;c=true}}}}if(c){if(history.length>0)history[history.length-1].actionName=`edit ${e}`;updateUndoRedoButtons();updateSelectedInfo();redrawCanvas()}else{if(history.length>0&&history[history.length-1].actionName.endsWith('(start)'))history.pop();updateUndoRedoButtons()}}
+    function handleResizeEntity(){hideContextMenu();if(selectedElement?.type!=='entity'){alert("Select entity.");return}const w=selectedElement.width,h=selectedElement.height,s=prompt(`New size (w,h) for "${selectedElement.name}":`,`${w}, ${h}`);if(s){const p=s.split(/,|\s+/);if(p.length===2){const n=parseInt(p[0].trim(),10),e=parseInt(p[1].trim(),10);if(!isNaN(n)&&!isNaN(e)&&n>=50&&e>=40){if(n!==w||e!==h){saveStateForUndo("resize entity");selectedElement.resize(n,e);redrawCanvas()}}else alert(`Invalid (w>=50,h>=40).`)}else alert("Format: w,h")}}
+    function handleDeleteSelected(){hideContextMenu();if(!selectedElement)return;if(confirm(`Delete ${selectedElement.type} "${selectedElement.name||selectedElement.id}"?`))deleteElement(selectedElement)}
+    function changeAttributeType(a,t){hideContextMenu();if(a?.type==='attribute'&&a.attrType!==t){saveStateForUndo("change attr type");a.attrType=t;redrawCanvas();updateSelectedInfo()}}
+    function deleteElement(d){if(!d)return;saveStateForUndo("delete element");const i=d.id;let r=new Set([i]);const c=JSON.parse(JSON.stringify(d.toJSON()));if(d.type==='entity'||d.type==='relationship')d.attributes.forEach(a=>r.add(a));if(d.type==='entity')elements.forEach(e=>{if(e.type==='relationship'&&(e.entity1Id===i||e.entity2Id===i)){r.add(e.id);e.attributes.forEach(a=>r.add(a))}});else if(d.type==='attribute'){const o=d.getOwner();o?.removeAttribute(i)}elements=elements.filter(e=>!r.has(e.id));if(selectedElement&&r.has(selectedElement.id))selectedElement=null;updateSelectedInfo();redrawCanvas();emitAddonEvent('elementDeleted',c,Array.from(r));redoHistory=[];updateUndoRedoButtons()}
+
+    // --- View / Theme / Toolbar ---
+    function applyTheme(t){body.className=t==='dark'?'dark-mode':'light-mode';themeToggleBtn.textContent=t==='dark'?'☀️':'🌙';themeToggleBtn.title=t==='dark'?'Light':'Dark';localStorage.setItem(THEME_STORAGE_KEY,t);redrawCanvas()}function toggleTheme(){const t=body.classList.contains('dark-mode')?'dark':'light';applyTheme(t==='dark'?'light':'dark')}function applyZoom(f,x,y){const w=(x-originX)/scale,h=(y-originY)/scale,o=scale,n=Math.max(MIN_ZOOM,Math.min(MAX_ZOOM,scale*f));if(n!==o){scale=n;originX=x-w*scale;originY=y-h*scale;redrawCanvas()}}function resetView(){if(scale!==1.0||originX!==0||originY!==0){saveStateForUndo("reset view");scale=1.0;originX=0;originY=0;redrawCanvas();updateUndoRedoButtons()}}
+    function showToolbar(){clearTimeout(toolbarTimeout);toolbar.classList.add('visible')}
+    function hideToolbar(){toolbarTimeout=setTimeout(()=>{if(!toolbar.matches(':hover')&&contextMenu.style.display!=='block'&&!helpModalOverlay.classList.contains('visible')&&!addonManagerModalOverlay.classList.contains('visible')&&!settingsModalOverlay.classList.contains('visible'))toolbar.classList.remove('visible')},900)}
+    function applyUIScale(newScaleFactor) { uiScaleFactor = Math.max(MIN_UI_SCALE, Math.min(MAX_UI_SCALE, newScaleFactor)); document.documentElement.style.fontSize = `${BASE_FONT_SIZE_PX * uiScaleFactor}px`; if(uiScaleDisplay) uiScaleDisplay.textContent = `${Math.round(uiScaleFactor * 100)}%`; if(uiScaleDownBtn) uiScaleDownBtn.disabled = uiScaleFactor <= MIN_UI_SCALE; if(uiScaleUpBtn) uiScaleUpBtn.disabled = uiScaleFactor >= MAX_UI_SCALE; redrawCanvas(); }
+    function applyToolbarPosition(position) { if (!toolbar) return; const positions = ['top', 'bottom', 'left', 'right']; positions.forEach(p => toolbar.classList.remove(`toolbar-pos-${p}`)); toolbar.classList.add(`toolbar-pos-${position}`); toolbarPosition = position; [toolbarPosTopBtn, toolbarPosBottomBtn, toolbarPosLeftBtn, toolbarPosRightBtn].forEach(btn => { if(btn) btn.classList.remove('active-toggle'); }); if(position === 'top' && toolbarPosTopBtn) toolbarPosTopBtn.classList.add('active-toggle'); else if(position === 'bottom' && toolbarPosBottomBtn) toolbarPosBottomBtn.classList.add('active-toggle'); else if(position === 'left' && toolbarPosLeftBtn) toolbarPosLeftBtn.classList.add('active-toggle'); else if(position === 'right' && toolbarPosRightBtn) toolbarPosRightBtn.classList.add('active-toggle'); }
+
+
+    // --- Event Handlers ---
+    function handleKeyDown(e){if(helpModalOverlay.classList.contains('visible')||addonManagerModalOverlay.classList.contains('visible')||settingsModalOverlay.classList.contains('visible'))return;const a=document.activeElement;if(a&&(a.tagName==='INPUT'||a.tagName==='TEXTAREA'||a.isContentEditable)){if(e.key==='Escape')a.blur();return}const c=e.ctrlKey||e.metaKey,s=e.shiftKey;if(c&&e.key.toLowerCase()==='z'){e.preventDefault();if(s)redoLastAction();else undoLastAction()}else if(c&&e.key.toLowerCase()==='y'){e.preventDefault();redoLastAction()}else if((e.key==='Delete'||e.key==='Backspace')&&selectedElement){e.preventDefault();handleDeleteSelected()}else if(e.key==='+'||e.key==='='){e.preventDefault();applyZoom(1.15,canvas.getBoundingClientRect().width/2,canvas.getBoundingClientRect().height/2)}else if(e.key==='-'){e.preventDefault();applyZoom(1/1.15,canvas.getBoundingClientRect().width/2,canvas.getBoundingClientRect().height/2)}else if(e.key==='0'){e.preventDefault();resetView()}else if(e.key==='Escape'){e.preventDefault();if(isConnecting){isConnecting=false;connectStartElement=null;connectTargetElement=null;canvas.style.cursor='default';redrawCanvas()}else if(selectedElement){selectedElement=null;updateSelectedInfo();redrawCanvas()}hideContextMenu()}} // Removed '?' for help modal, handled by settings
+    function handleMouseDown(e){if(contextMenu.contains(e.target)||helpModalOverlay.classList.contains('visible')||addonManagerModalOverlay.classList.contains('visible')||settingsModalOverlay.classList.contains('visible'))return;hideContextMenu();if(e.button!==0)return;const m=getMousePos(e),t=findElementAtPos(m.x,m.y);if(e.target.classList.contains('connection-point'))return;if(t){if(t!==selectedElement){selectedElement=t;updateSelectedInfo();redrawCanvas()}if(!isConnecting&&(t.type==='entity'||t.type==='attribute')){draggingElement=t;saveStateForUndo("start drag");bringToFront(draggingElement);let x,y;if(draggingElement.type==='attribute'){const o=draggingElement.getOwner();if(o){const p=draggingElement.getAbsolutePosition(o);x=p.x;y=p.y}else{draggingElement=null;if(history.length>0&&history[history.length-1].actionName==="start drag")history.pop();updateUndoRedoButtons();return}}else{x=draggingElement.x;y=draggingElement.y}dragOffsetX=m.x-x;dragOffsetY=m.y-y;canvas.style.cursor='grabbing';isPanning=false}}else{if(selectedElement&&!isPanning){selectedElement=null;updateSelectedInfo();redrawCanvas()}if(!isConnecting){draggingElement=null;isPanning=true;panStartX=e.clientX-originX;panStartY=e.clientY-originY;canvas.style.cursor='grab'}}}
+    function handleMouseMove(e){if(helpModalOverlay.classList.contains('visible')||addonManagerModalOverlay.classList.contains('visible')||settingsModalOverlay.classList.contains('visible'))return;const m=getMousePos(e),c={x:e.clientX,y:e.clientY};if(draggingElement){isPanning=false;isConnecting=false;hoveredElement=null;connectTargetElement=null;let x=m.x-dragOffsetX,y=m.y-dragOffsetY;if(draggingElement.type==='entity'&&isGridSnapActive){x=Math.round(x/GRID_SIZE)*GRID_SIZE;y=Math.round(y/GRID_SIZE)*GRID_SIZE}if(draggingElement.type==='entity')draggingElement.moveTo(x,y);else if(draggingElement.type==='attribute'){const o=draggingElement.getOwner();if(o)draggingElement.snapToSide(x,y,o)}canvas.style.cursor='grabbing';redrawCanvas()}else if(isPanning){isConnecting=false;draggingElement=null;hoveredElement=null;connectTargetElement=null;originX=c.x-panStartX;originY=c.y-panStartY;canvas.style.cursor='grabbing';redrawCanvas()}else if(isConnecting){draggingElement=null;isPanning=false;hoveredElement=null;connectCurrentX=m.x;connectCurrentY=m.y;const p=findElementAtPos(connectCurrentX,connectCurrentY);connectTargetElement=(p?.type==='entity'&&p!==connectStartElement)?p:null;const h=Array.from(canvasContainer.querySelectorAll('.connection-point')).some(t=>t.matches(':hover'));canvas.style.cursor=(connectTargetElement||h)?'crosshair':'not-allowed';redrawCanvas()}else{const n=findElementAtPos(m.x,m.y);let r=false;if(n!==hoveredElement){hoveredElement=n;r=true}const u=hoveredElement?'pointer':(canvas.style.cursor==='grab'||canvas.style.cursor==='grabbing'?canvas.style.cursor:'default');if(canvas.style.cursor!==u)canvas.style.cursor=u;if(r)redrawCanvas()}}
+    function handleMouseUp(e){if(e.button!==0||helpModalOverlay.classList.contains('visible')||addonManagerModalOverlay.classList.contains('visible')||settingsModalOverlay.classList.contains('visible'))return;const m=getMousePos(e);if(isConnecting&&connectStartElement){if(connectTargetElement){const x=elements.some(l=>l.type==='relationship'&&((l.entity1Id===connectStartElement.id&&l.entity2Id===connectTargetElement.id)||(l.entity1Id===connectTargetElement.id&&l.entity2Id===connectStartElement.id)));if(!x){const d=`${connectStartElement.name}_${connectTargetElement.name}`,r=prompt("New relationship name:",d);if(r!==null){const l=new Relationship(connectStartElement.id,connectTargetElement.id,r.trim()||d);saveStateForUndo("add relationship");elements.push(l);selectedElement=l;emitAddonEvent('elementAdded',l)}else selectedElement=connectStartElement}else{alert("Direct relationship already exists.");selectedElement=elements.find(l=>l.type==='relationship'&&((l.entity1Id===connectStartElement.id&&l.entity2Id===connectTargetElement.id)||(l.entity1Id===connectTargetElement.id&&l.entity2Id===connectStartElement.id)))||connectStartElement}}else selectedElement=connectStartElement;updateSelectedInfo()}else if(draggingElement){if(history.length>0&&history[history.length-1].actionName==="start drag"){history[history.length-1].actionName=`drag ${draggingElement.type}`;updateUndoRedoButtons()}else saveStateForUndo(`end drag ${draggingElement.type}`);selectedElement=draggingElement;updateSelectedInfo()}else if(isPanning)canvas.style.cursor='default';isConnecting=false;connectStartElement=null;connectTargetElement=null;draggingElement=null;isPanning=false;hoveredElement=findElementAtPos(m.x,m.y);canvas.style.cursor=hoveredElement?'pointer':'default';redrawCanvas()}
+    function handleMouseLeave(e){if(helpModalOverlay.classList.contains('visible')||addonManagerModalOverlay.classList.contains('visible')||settingsModalOverlay.classList.contains('visible'))return;let r=false;if(draggingElement){if(history.length>0&&history[history.length-1].actionName==="start drag"){history[history.length-1].actionName=`drag ${draggingElement.type} (cancelled)`;updateUndoRedoButtons()}selectedElement=draggingElement;draggingElement=null;r=true}if(isPanning){isPanning=false;r=true}if(isConnecting){selectedElement=connectStartElement;isConnecting=false;connectStartElement=null;connectTargetElement=null;r=true}if(hoveredElement){hoveredElement=null;r=true}canvas.style.cursor='default';if(r)redrawCanvas()}
+    function handleDoubleClick(e){if(e.button!==0||helpModalOverlay.classList.contains('visible')||addonManagerModalOverlay.classList.contains('visible')||settingsModalOverlay.classList.contains('visible'))return;const m=getMousePos(e),c=findElementAtPos(m.x,m.y);if(c){selectedElement=c;updateSelectedInfo();redrawCanvas();handleEdit()}}
+    function handleWheel(e){if(helpModalOverlay.classList.contains('visible')||addonManagerModalOverlay.classList.contains('visible')||settingsModalOverlay.classList.contains('visible'))return;e.preventDefault();const z=e.deltaY<0?1.15:1/1.15,r=canvas.getBoundingClientRect();applyZoom(z,e.clientX-r.left,e.clientY-r.top)}
+    let originalHandleContextMenuEvent = function(e){e.preventDefault();hideContextMenu();if(helpModalOverlay.classList.contains('visible')||addonManagerModalOverlay.classList.contains('visible')||settingsModalOverlay.classList.contains('visible'))return;const m=getMousePos(e),t=findElementAtPos(m.x,m.y);selectedElement=t;updateSelectedInfo();redrawCanvas();let i=[];if(t){const l=t.type;if(l==='entity')i=[{label:"⚪ Add Simple Attr",action:()=>handleAddAttribute('simple')},{label:"⚫ Add PK Attr",action:()=>handleAddAttribute('pk')},{label:"◐ Add AK Attr",action:()=>handleAddAttribute('ak')},{separator:true},{label:"✏️ Edit Name",action:handleEdit},{label:"📏 Resize",action:handleResizeEntity},{separator:true},{label:"❌ Delete Entity",action:handleDeleteSelected,danger:true}];else if(l==='attribute'){const o=t.getOwner(),w=o?(o.name||o.type):'??';i=[{label:"✏️ Edit Name",action:handleEdit},{separator:true},{label:"⚪ Type: Simple",action:()=>changeAttributeType(t,'simple'),disabled:t.attrType==='simple'},{label:"⚫ Type: PK",action:()=>changeAttributeType(t,'pk'),disabled:t.attrType==='pk'},{label:"◐ Type: AK",action:()=>changeAttributeType(t,'ak'),disabled:t.attrType==='ak'},{separator:true},{label:`❌ Delete Attr (from ${w})`,action:handleDeleteSelected,danger:true}]}else if(l==='relationship')i=[{label:"⚪ Add Simple Attr",action:()=>handleAddAttribute('simple')},{separator:true},{label:"✏️ Edit Name/Cards",action:handleEdit},{separator:true},{label:"❌ Delete Relation",action:handleDeleteSelected,danger:true}]}else{selectedElement=null;updateSelectedInfo();redrawCanvas();i=[{label:"➕ Add Entity Here",action:()=>handleAddEntity(m.x,m.y)},{label:"🎯 Reset View",action:resetView,disabled:scale===1.0&&originX===0&&originY===0}]}if(i.length>0)showContextMenu(e.clientX,e.clientY,i)};
+    function handleContextMenuEvent(e){return originalHandleContextMenuEvent(e)} // Wrapper set by addon
+    function handleDocumentMouseDown(e){if(!contextMenu.contains(e.target)&&!e.target.closest('#toolbar button'))hideContextMenu()}
+    function handleDocumentMouseMove(e){if(e.clientY<80||toolbar.matches(':hover')||e.target.closest('#toolbar')||e.target.closest('#contextMenu'))showToolbar();else hideToolbar()}
+    function resizeCanvas(){const d=window.devicePixelRatio||1,w=window.innerWidth,h=window.innerHeight;canvas.style.width=`${w}px`;canvas.style.height=`${h}px`;canvas.width=Math.round(w*d);canvas.height=Math.round(h*d);if(ctx)ctx.setTransform(d,0,0,d,0,0);redrawCanvas()}
+
+    // --- Addon Dynamic Load ---
+    function loadAndInitializeAddon(c,f){const o=registeredAddons.length;let s=!1,n=null;try{const b=new Set(registeredAddons.map(a=>a.name));const r=new Function(c);r();n=registeredAddons.find(a=>!b.has(a.name));if(n){s=!0;const a=n.name,e=addonEnabledStatus[a]??!0;if(e){if(loadedAddonNames.has(a)){alert(`Addon "${a}" already loaded.`)}else{console.log(`Initializing loaded addon: "${a}"`);n.init(addonApi);loadedAddonNames.add(a);alert(`Addon "${a}" loaded & initialized.`);openAddonManager()}}else{alert(`Addon "${a}" registered but disabled.`);openAddonManager()}}else{alert(`File ${f} did not register a new addon.`)} }catch(e){console.error(`Error loading/init ${f}:`,e);alert(`Error loading addon ${f}.`);if(n&&registeredAddons.includes(n)){const x=registeredAddons.indexOf(n);registeredAddons.splice(x,1)}}addonFileInput.value=''}
+
+    // --- Setup Event Listeners ---
+    function setupEventListeners(){canvas.onmousedown=handleMouseDown;canvas.onmousemove=handleMouseMove;canvas.onmouseup=handleMouseUp;canvas.onmouseleave=handleMouseLeave;canvas.ondblclick=handleDoubleClick;canvas.onwheel=handleWheel;canvas.oncontextmenu=handleContextMenuEvent;window.addEventListener('resize',resizeCanvas);document.addEventListener('mousedown',handleDocumentMouseDown,!0);document.addEventListener('mousemove',handleDocumentMouseMove);document.addEventListener('keydown',handleKeyDown);saveBtn.onclick=saveDiagramToFile;loadBtn.onclick=loadDiagramFromFile;exportPngBtn.onclick=exportDiagramToPNG;clearBtn.onclick=clearDiagram;undoBtn.onclick=undoLastAction;redoBtn.onclick=redoLastAction;zoomInBtn.onclick=()=>applyZoom(1.15,canvas.getBoundingClientRect().width/2,canvas.getBoundingClientRect().height/2);zoomOutBtn.onclick=()=>applyZoom(1/1.15,canvas.getBoundingClientRect().width/2,canvas.getBoundingClientRect().height/2);resetZoomPanBtn.onclick=resetView;themeToggleBtn.onclick=toggleTheme;
+        helpModalCloseBtn.onclick=hideHelpModal;helpModalOverlay.onclick=e=>{if(e.target===helpModalOverlay)hideHelpModal()};
+        addonManagerCloseBtn.onclick=closeAddonManager;addonManagerModalOverlay.onclick=e=>{if(e.target===addonManagerModalOverlay)closeAddonManager()};
+        settingsBtn.onclick = showSettingsModal; settingsModalCloseBtn.onclick = hideSettingsModal; settingsModalOverlay.onclick = e => { if (e.target === settingsModalOverlay) hideSettingsModal(); };
+        // Settings Modal Internal Buttons
+        settingsOpenAddonManagerBtn.onclick = () => { openAddonManager(); hideSettingsModal(); };
+        settingsOpenHelpBtn.onclick = () => { showHelpModal(); hideSettingsModal(); };
+        settingsToggleOriginalCardinalityCheckbox.onchange = (e) => {
+            showDetailedCardinalities = e.target.checked;
+            saveDetailedCardinalitySetting(); // Persist this setting
+            redrawCanvas();
+        };
+        toolbar.addEventListener('mouseenter',showToolbar);toolbar.addEventListener('mouseleave',hideToolbar);loadAddonFileBtn.onclick=()=>{addonFileInput.click()};addonFileInput.onchange=e=>{const f=e.target.files[0];if(f&&f.name.endsWith('.js')){const r=new FileReader;r.onload=v=>{loadAndInitializeAddon(v.target.result,f.name)};r.onerror=()=>{alert(`Error reading file: ${f.name}`);addonFileInput.value=null};r.readAsText(f)}else if(f){alert("Please select a .js file.");addonFileInput.value=null}};gridToggleBtn.onclick=()=>{isGridSnapActive=!isGridSnapActive;gridToggleBtn.classList.toggle('active-toggle',isGridSnapActive);gridToggleBtn.title=isGridSnapActive?"Deactivate Grid Snap":"Activate Grid Snap";saveGridStatus();redrawCanvas()};
+        // Listeners for UI Scale/Position are set by the UI Customizer Addon
+    }
+
+    // --- Addon API Definition & Event Emitter ---
+    function defineAddonApi(){addonApi={getElements:()=>[...elements],getElementById:id=>elements.find(e=>e.id===id),getScale:()=>scale,getOrigin:()=>({x:originX,y:originY}),getMousePos:getMousePos,redrawCanvas:redrawCanvas,getCanvasContext:()=>ctx,getToolbarElement:()=>toolbar,getSelectedInfoToolbarElement:()=>selectedInfoToolbar,showContextMenu:showContextMenu,saveStateForUndo:saveStateForUndo,_core:{RelationshipClass:Relationship,setSelectedElement:e=>{selectedElement=e},getSelectedElement:()=>selectedElement,getOriginalHandleContextMenuEvent:()=>originalHandleContextMenuEvent,setHandleContextMenuEvent:f=>{handleContextMenuEvent=f;originalHandleContextMenuEvent=f},getOriginalDeserializeAndLoad:()=>originalDeserializeAndLoad,setDeserializeAndLoad:f=>{deserializeAndLoad=f;originalDeserializeAndLoad=f}},on:(n,c)=>{if(!addonEventListeners[n])addonEventListeners[n]=[];addonEventListeners[n].push(c)},off:(n,c)=>{if(addonEventListeners[n])addonEventListeners[n]=addonEventListeners[n].filter(f=>f!==c)}}}
+    function emitAddonEvent(n,...a){if(addonEventListeners[n])addonEventListeners[n].forEach(c=>{try{c(...a)}catch(e){console.error(`Error in addon listener for "${n}":`,e)}})}
+
+    // --- Addon Initialization ---
+    function initializeAddons(){
+        console.log("Registering embedded addons...");
+        // --- Addon: Element Counter ---
+        (function(){ ZenERD.registerAddon({ name:"Element Counter",version:"0.1.0",description:"Shows E/R count.",init:function(a){let d=addonElementCounterDisplay;function u(){if(!d){d=document.getElementById('addonElementCounterDisplay');if(!d)return;}const e=a.getElements(),n=e.filter(l=>l.type==='entity').length,r=e.filter(l=>l.type==='relationship').length;d.textContent=`E: ${n}, R: ${r}`} if(!d){console.warn("Counter display element might not exist yet.")} a.on('appInitialized',u);a.on('elementAdded',u);a.on('elementDeleted',u);a.on('diagramLoaded',u);a.on('diagramCleared',u)} }); })();
+        // --- Addon: Relationship Resizer ---
+        (function(){ ZenERD.registerAddon({ name:"Relationship Resizer",version:"1.0.0",description:"Allows resizing relationship diamonds.",init:function(api){const C=api._core.RelationshipClass;if(!C.prototype.resize){C.prototype.resize=function(s){this.size=Math.max(10,Math.min(100,s));};} if(!window.handleResizeRelationship_addon){window.handleResizeRelationship_addon=function(){hideContextMenu();const c=api._core.getSelectedElement();if(c?.type!=='relationship')return;const z=c.size||RELATION_DIAMOND_SIZE,n=prompt(`New diamond size "${c.name}"(10-100):`,`${z}`);if(n){const s=parseInt(n.trim(),10);if(!isNaN(s)&&s>=10&&s<=100){if(s!==z){api.saveStateForUndo("resize diamond");c.resize(s);api.redrawCanvas();}}else alert(`Invalid.`);}};} const o=api._core.getOriginalHandleContextMenuEvent(); if(o&&!o._resizerWrapped){const w=function(e){o(e);const c=api._core.getSelectedElement();if(c?.type==='relationship'&&contextMenu.style.display==='block'){const i=Array.from(contextMenuItems.querySelectorAll('li'));if(!i.some(l=>l.textContent.includes("Resize Diamond"))){const x=i.findIndex(l=>l.textContent.includes("Edit Name/Cards"));const n=document.createElement('li');n.textContent='♦️ Resize Diamond';n.onclick=v=>{v.stopPropagation();window.handleResizeRelationship_addon();hideContextMenu()};if(x!==-1&&x+1<i.length){i[x].parentNode.insertBefore(n,i[x+1]);}else{contextMenuItems.insertBefore(n,i[i.length-1]);}}}};w._resizerWrapped = true; api._core.setHandleContextMenuEvent(w);}} }); })();
+        // --- Addon: UI Customizer ---
+        (function() { ZenERD.registerAddon({ name: "UI Customizer", version: "1.0.0", description: "Adjusts UI scale and toolbar position.", init: function(api) { console.log("UI Customizer Init"); applyUIScale(uiScaleFactor); applyToolbarPosition(toolbarPosition); if (uiScaleDownBtn) uiScaleDownBtn.onclick = () => { applyUIScale(uiScaleFactor - UI_SCALE_STEP); saveUIScale(); }; if (uiScaleUpBtn) uiScaleUpBtn.onclick = () => { applyUIScale(uiScaleFactor + UI_SCALE_STEP); saveUIScale(); }; if(toolbarPosTopBtn) toolbarPosTopBtn.onclick = () => { applyToolbarPosition('top'); saveToolbarPosition(); }; if(toolbarPosBottomBtn) toolbarPosBottomBtn.onclick = () => { applyToolbarPosition('bottom'); saveToolbarPosition(); }; if(toolbarPosLeftBtn) toolbarPosLeftBtn.onclick = () => { applyToolbarPosition('left'); saveToolbarPosition(); }; if(toolbarPosRightBtn) toolbarPosRightBtn.onclick = () => { applyToolbarPosition('right'); saveToolbarPosition(); }; } }); })();
+        // Note: "Original Cardinality Toggle" addon is removed as its functionality is integrated.
+
+        // --- Initialize Enabled Addons ---
+        console.log(`Initializing enabled addons (${registeredAddons.length} total)...`);
+        registeredAddons.forEach(a=>{const e=addonEnabledStatus[a.name]??!0;if(e&&!loadedAddonNames.has(a.name)){if(typeof a.init==='function'){try{a.init(addonApi);loadedAddonNames.add(a.name)}catch(e){console.error(`Error init addon "${a.name}":`,e)}}else console.warn(`Addon "${a.name}" no init.`)}else if(!e)console.log(`Addon "${a.name}" disabled.`)})
+    }
+
+    // --- Main Initialization ---
+    function initialize(){
+        console.log("Initializing Zen ERD v0.2.2...");
+        // 1. Get DOM element references
+        canvas=document.getElementById('erdCanvas');ctx=canvas.getContext('2d');toolbar=document.getElementById('toolbar');selectedInfoToolbar=document.getElementById('selectedInfoToolbar');canvasContainer=document.getElementById('canvasContainer');contextMenu=document.getElementById('contextMenu');contextMenuItems=document.getElementById('contextMenuItems');themeToggleBtn=document.getElementById('themeToggleBtn');body=document.body;helpModalOverlay=document.getElementById('helpModalOverlay');helpModalContent=document.getElementById('helpModalContent');helpModalCloseBtn=document.getElementById('helpModalCloseBtn');undoBtn=document.getElementById('undoBtn');redoBtn=document.getElementById('redoBtn');saveBtn=document.getElementById('saveBtn');loadBtn=document.getElementById('loadBtn');exportPngBtn=document.getElementById('exportPngBtn');clearBtn=document.getElementById('clearBtn');zoomInBtn=document.getElementById('zoomInBtn');zoomOutBtn=document.getElementById('zoomOutBtn');resetZoomPanBtn=document.getElementById('resetZoomPanBtn');addonFileInput=document.getElementById('addonFileInput');
+        addonManagerModalOverlay=document.getElementById('addonManagerModalOverlay');addonManagerModalContent=document.getElementById('addonManagerModalContent');addonManagerCloseBtn=document.getElementById('addonManagerCloseBtn');addonListUl=document.getElementById('addonList');loadAddonFileBtn=document.getElementById('loadAddonFileBtn');
+        addonElementCounterDisplay=document.getElementById('addonElementCounterDisplay');gridToggleBtn=document.getElementById('gridToggleBtn');
+        uiScaleDownBtn=document.getElementById('uiScaleDownBtn');uiScaleDisplay=document.getElementById('uiScaleDisplay');uiScaleUpBtn=document.getElementById('uiScaleUpBtn');
+        toolbarPosTopBtn=document.getElementById('toolbarPosTopBtn');toolbarPosBottomBtn=document.getElementById('toolbarPosBottomBtn');toolbarPosLeftBtn=document.getElementById('toolbarPosLeftBtn');toolbarPosRightBtn=document.getElementById('toolbarPosRightBtn');
+        settingsBtn = document.getElementById('settingsBtn'); settingsModalOverlay = document.getElementById('settingsModalOverlay'); settingsModalContent = document.getElementById('settingsModalContent'); settingsModalCloseBtn = document.getElementById('settingsModalCloseBtn');
+        settingsOpenAddonManagerBtn = document.getElementById('settingsOpenAddonManagerBtn');
+        settingsOpenHelpBtn = document.getElementById('settingsOpenHelpBtn');
+        settingsToggleOriginalCardinalityCheckbox = document.getElementById('settingsToggleOriginalCardinalityCheckbox');
+
+
+        if(!ctx){console.error("FATAL: Canvas context failed.");return}
+        // 2. Load statuses & Define API
+        loadAddonStatus();loadGridStatus();loadUIScale();loadToolbarPosition();loadDetailedCardinalitySetting();defineAddonApi();
+        // 3. Apply initial settings
+        const t=localStorage.getItem(THEME_STORAGE_KEY)||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');applyTheme(t);
+        applyUIScale(uiScaleFactor);applyToolbarPosition(toolbarPosition);
+        // 4. Resize canvas
+        resizeCanvas();
+        // 5. History
+        if(history.length===0){saveStateForUndo("initial empty state");redoHistory=[]}else updateUndoRedoButtons();
+        // 6. Initial Button States
+        gridToggleBtn.classList.toggle('active-toggle',isGridSnapActive);gridToggleBtn.title=isGridSnapActive?"Deactivate Grid Snap":"Activate Grid Snap";
+        // 7. Initialize addons (Original Cardinality Toggle addon removed)
+        initializeAddons();
+        // 8. Setup event listeners
+        setupEventListeners();
+        // 9. Final draw & UI setup
+        redrawCanvas();toolbarTimeout=setTimeout(hideToolbar,500);
+        emitAddonEvent('appInitialized');
+        console.log("Zen ERD Initialized.")
+    }
+
+    // --- Start ---
+    document.addEventListener('DOMContentLoaded',initialize);
+
+    // ]]>
+    </script>
+
+</body>
+</html>
+--- END OF FILE code (46).html ---
