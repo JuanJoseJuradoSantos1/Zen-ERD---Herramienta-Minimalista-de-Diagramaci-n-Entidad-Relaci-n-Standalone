@@ -2,25 +2,43 @@
 
 
 Zen ERD es una herramienta de diagramación Entidad-Relación (ERD) ligera, 100% standalone y de código abierto que funciona directamente en tu navegador web. Construida con HTML, CSS y JavaScript puro (Vanilla JS), no requiere instalación, dependencias externas ni conexión a internet para su uso básico. ¡Descarga un solo archivo y empieza a diseñar!
+
 Diseñada para ser simple, rápida y accesible, Zen ERD te permite crear, visualizar y modificar diagramas ER básicos de forma intuitiva. Es perfecta para estudiantes, desarrolladores que necesitan un boceto rápido de bases de datos o cualquiera que busque una solución ERD sin complicaciones.
+
 🔗 Prueba Zen ERD v0.2.2 en Vivo!
+
 ✨ Características Clave (v0.2.2)
 ✅ Totalmente Standalone: Funciona con un único archivo HTML. Descarga y abre en tu navegador. ¡Ideal para uso offline!
 🎨 Interfaz de Usuario Personalizable:
+
 Temas: Soporte para tema Claro y Oscuro, persistente.
+
 Escalado de UI: Ajusta el tamaño general de la interfaz (toolbar, modales, fuentes) para tu comodidad visual.
+
 Posición de la Barra de Herramientas: Coloca la barra donde más te guste (arriba, abajo, izquierda, derecha).
+
 ✍️ Creación y Edición Intuitiva:
+
 Añade Entidades, Atributos (Simples, PK, AK) y Relaciones con facilidad.
+
 Conexiones entre entidades mediante arrastrar y soltar desde puntos de conexión.
+
 Menús contextuales (clic derecho) para acciones rápidas sobre elementos o el lienzo.
+
 🖼️ Visualización y Navegación:
+
 Zoom y Paneo: Navega por diagramas grandes con la rueda del ratón, botones o atajos.
+
 Cuadrícula Visual: Activa una cuadrícula de fondo con opción de ajuste para entidades.
+
 Cardinalidades Detalladas: Opción para mostrar/ocultar las cardinalidades originales (ej. (0,n), (1,1)) junto a las líneas de relación.
+
 💾 Gestión de Diagramas:
+
 Guardar/Cargar: Exporta e importa tus diagramas en formato JSON, manteniendo la estructura y la vista.
+
 Exportar a PNG: Genera una imagen de tu diagrama actual para compartir o documentar.
+
 Limpiar Lienzo: Reinicia el espacio de trabajo fácilmente.
 ⏳ Productividad:
 Historial (Undo/Redo): Deshaz y rehaz acciones para corregir errores o explorar ideas.
