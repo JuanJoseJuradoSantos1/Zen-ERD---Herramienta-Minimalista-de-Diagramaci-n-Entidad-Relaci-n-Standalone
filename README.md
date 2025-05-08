@@ -1,6 +1,6 @@
-![alt text](https://via.placeholder.com/800x450.png?text=Zen+ERD+v0.2.2+Interfaz+Principal)
+![image](https://github.com/user-attachments/assets/dc9e8cac-b4b2-4bdb-86da-d791ce2272a0)
 
-(Reemplaza esta URL con una captura de pantalla principal de Zen ERD v0.2.2)
+
 Zen ERD es una herramienta de diagramación Entidad-Relación (ERD) ligera, 100% standalone y de código abierto que funciona directamente en tu navegador web. Construida con HTML, CSS y JavaScript puro (Vanilla JS), no requiere instalación, dependencias externas ni conexión a internet para su uso básico. ¡Descarga un solo archivo y empieza a diseñar!
 Diseñada para ser simple, rápida y accesible, Zen ERD te permite crear, visualizar y modificar diagramas ER básicos de forma intuitiva. Es perfecta para estudiantes, desarrolladores que necesitan un boceto rápido de bases de datos o cualquiera que busque una solución ERD sin complicaciones.
 🔗 Prueba Zen ERD v0.2.2 en Vivo!
