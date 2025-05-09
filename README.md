@@ -101,29 +101,6 @@ Arrastra desde los puntos de conexión de una entidad a otra para crear relacion
 
 Explora los botones de la barra de herramientas y el modal de Configuración (🛠️).
 
-🖼️ Más Capturas de Pantalla
-
-(Aquí puedes añadir más capturas de pantalla mostrando diferentes características o estados. Sube tus imágenes al repositorio, por ejemplo, en una carpeta assets/img/ y enlaza a ellas así: ![](./assets/img/tu_imagen.png))
-
-Modo Oscuro con Cardinalidades Detalladas:
-
-![alt text](https://via.placeholder.com/700x400.png?text=Zen+ERD+-+Modo+Oscuro+Detallado)
-
-
-(Reemplaza con tu captura)
-
-Modal de Configuración Centralizado:
-
-![alt text](https://via.placeholder.com/600x350.png?text=Zen+ERD+-+Modal+de+Configuración)
-
-
-(Reemplaza con tu captura)
-
-Gestor de Addons (accesible desde Configuración):
-
-![alt text](https://via.placeholder.com/600x350.png?text=Zen+ERD+-+Gestor+de+Addons)
-
-(Reemplaza con tu captura)
 
 🛣️ Hoja de Ruta / Posibles Mejoras Futuras
 
